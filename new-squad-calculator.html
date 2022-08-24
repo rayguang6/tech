@@ -26,13 +26,15 @@
             height: 100%;
             width: 100%;
             border-radius: 15px;
-            padding: 5px 10px !important;
+            padding: 10px 5px !important;
+            margin: 0;
         }
         .calculator-header div h6 {
             font-size: 10px !important;
             border-radius: 5px;
             color: #E0AB48;
             font-weight: bold;
+            /* margin: 0; */
         }
 
         .calculator-header{
@@ -41,7 +43,8 @@
             justify-content: center;
             flex-wrap: nowrap;
             gap: 10px;
-            padding: 15px !important;
+            width: 100%;
+            /* margin: 0; */
         }
 
         .product-row{
@@ -49,6 +52,7 @@
             background-color: #fff;
             border-left: 10px solid #E0AB48;
             width: 100%;
+            margin: 0;
             
             display: flex;
             align-items: center;
@@ -65,11 +69,11 @@
             font-size: 10px;
             font-weight: bold;
             margin-bottom: 2px;
-            text-align: left;
+            /* text-align: left; */
         }
         
         .product-details p{
-            text-align: left;
+            /* text-align: left; */
             padding: 0;
             margin: 0;
             font-size: 8px;
@@ -80,6 +84,11 @@
             .product-details *{
                 white-space: nowrap;
             }
+        }
+
+        .product-details, .increment-group{
+            margin: 0;
+            /* padding: 0; */
         }
 
         .increment-group{
@@ -113,13 +122,13 @@
     <div class="container squad-calculator-container p-0 m-0 mx-auto">
         <h2 class="text-center fw-bold">Internal Squad Commission Calculator</h2>
 
-        <div class="row calculator-header m-0 p-0">
+        <div class="row calculator-header m-0 p-0 px-4">
             <div class="col-3 m-0 p-0"><h6 class="bg-white py-2 px-0 text-center">All <br> Products</h6></div>
             <div class="col-3 m-0 p-0"><h6 class="bg-white py-2 px-0 text-center">Leads <br> (70%)</h6></div>
             <div class="col-3 m-0 p-0"><h6 class="bg-white py-2 px-0 text-center">Closing <br> (30%)</h6></div>
             <div class="col-3 m-0 p-0"><h6 class="bg-white py-2 px-0 text-center">Lead + Close <br> (100%)</h6></div>
         </div>
-        <div class="container p-0 m-0 w-100" id="product-container">
+        <div class="container p-0 m-0 w-100 px-2" id="product-container">
             <!-- placeholder to put the product rows -->
         </div>
 
@@ -327,8 +336,8 @@
                 <div class="product-row row m-0 mt-2">
                         <div class="product-details col-3">
                             <h6>${product.name}</h6>
-                            <p>Sales: RM<span id="sales-${product.id}">0</span></p>
-                            <p>Comm: RM<span id="commission-${product.id}">0</span></p>
+                            <p>Sales: RM<span class="text-end" id="sales-${product.id}">0</span></p>
+                            <p>Comm: RM<span class="text-end" id="commission-${product.id}">0</span></p>
                         </div>
         
                         <div class="quantity-col col-3 ">
