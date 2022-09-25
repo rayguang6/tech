@@ -11,21 +11,11 @@
   </head>
   <body>
 
-  <!-- Jquery CDN --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Jquery CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
   <!-- Datatable CSS CDN --><link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-  <!-- Datatable JS CDN --><script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   
-  <!-- Bootstrap CSS CDN -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
-  <!-- Bootstrap JS CDN -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
-  
-  <!-- Fontawesome CDN --><script src="https://kit.fontawesome.com/db51efbc0b.js" crossorigin="anonymous"></script>
-  
-  <!-- moment JS CDN --><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-  <!-- sort date datatable moment JS CDN --><script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
-
   <style>
 
     *, html, body{
@@ -285,7 +275,6 @@ Spinner END
 
     <script>
 
-      
       const baseURL = `https://docs.google.com/spreadsheets/d/`;
       const ssid = `1qKX3OSh8_B3b7aYm4-raqkiMCGq85bPjHJRp0cSKRvA`;
       const q1 = `/gviz/tq?`;
@@ -302,6 +291,7 @@ Spinner END
       // fetchAPI(endpoint)
 
       window.onload = fetchAPI(endpoint);
+
 
       // check if the cell is null, if not null then return the value
       function getCellValue(cell,textIfNull){
@@ -336,7 +326,7 @@ Spinner END
       }
 
       async function fetchAPI(endpoint){
-
+        console.log(new Date());
         spinner.removeAttribute('hidden');
 
         const response = await fetch(endpoint)
@@ -344,7 +334,9 @@ Spinner END
         const tempData = data.substr(47).slice(0, -2);
         const json = JSON.parse(tempData)
         const rows = json.table.rows
-        
+
+        console.log(rows);
+        console.log(new Date());
 
         rows.forEach((row)=>{
           const tempRow = row.c
@@ -377,11 +369,12 @@ Spinner END
               protectPeriod = convertToDate(protectPeriod)
                 // add protection period only when the product is not "VMG PREVIEW" or "Book"
                 if(product!="Vimigo Preview" && product!="[Book] 分钱为王"){
-                    if(ownerTeam == '11348619'){
+                    // if(ownerTeam == '11348619'){
                       protectPeriod.setDate(protectPeriod.getDate() + 365)
-                    }else{
-                      protectPeriod.setDate(protectPeriod.getDate() + 60)
-                    }
+                    // }
+                    // else{
+                    //   protectPeriod.setDate(protectPeriod.getDate() + 60)
+                    // }
                 }
 
                 protectPeriod = moment(protectPeriod).format('DD MMM, YYYY')
@@ -403,11 +396,15 @@ Spinner END
 
               companies.push(object)
               buildRow(object)
-        })
+        }) //end foreach
+        console.log(new Date());
 
         // buildTableContent()
         spinner.setAttribute('hidden', '');
+        
         buildTable()
+        console.log(new Date());
+
     }
 
     function convertToDate(string){
@@ -497,5 +494,14 @@ Spinner END
     });
 
     </script>
+
+
+<!-- Datatable JS CDN --><script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  
+  <!-- Fontawesome CDN --><script src="https://kit.fontawesome.com/db51efbc0b.js" crossorigin="anonymous"></script>
+  
+  <!-- moment JS CDN --><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+  <!-- sort date datatable moment JS CDN --><script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
+
   </body>
 </html>
