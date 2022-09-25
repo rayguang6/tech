@@ -210,7 +210,7 @@ Spinner END
               <th>Product</th>
               <th>Deal Owner</th>
               <th>Close Date</th>
-              <th>Protection Period</th>
+              <th>Expiry Date</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -235,7 +235,7 @@ Spinner END
 
       const q2 = 'tqx=out:json';
 
-      const sheetId = `v1`
+      const sheetId = `Deal`
       const q3 = `sheet=${sheetId}`
       const endpoint = `${baseURL}${ssid}${q1}&${q2}&${q3}`;
 
@@ -297,13 +297,16 @@ Spinner END
         rows.forEach(async (row)=>{
           const tempRow = row.c
           //name, product,id,closer,closeDate
-            var dealName = getCellValue(tempRow[0]," ")
-            var companyName = getCellValue(tempRow[1]," ")
-            var product = getCellValue(tempRow[2]," ")
-            var ownerID = getCellValue(tempRow[3]," ")
-            var ownerName = getCellValue(tempRow[4],"unassigned")
-            var closeDate = getCellValue(tempRow[5],"")
-            var protectPeriod = getCellValue(tempRow[5],"")
+            var recordID = getCellValue(tempRow[0]," ")
+            var companyID = getCellValue(tempRow[1]," ")
+            var companyName = getCellValue(tempRow[2]," ")
+            var dealName = getCellValue(tempRow[3]," ")
+            var product = getCellValue(tempRow[4]," ")
+            var ownerID = getCellValue(tempRow[5]," ")
+            var ownerName = getCellValue(tempRow[6],"unassigned")
+            var ownerTeam = getCellValue(tempRow[7],"")
+            var closeDate = getCellValue(tempRow[8],"")
+            var protectPeriod = getCellValue(tempRow[8],"")
             var status
 
             // var companyName = tempRow[0]== null? "" : tempRow[0].v
@@ -322,24 +325,29 @@ Spinner END
             //   closeDate = closeDate.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
             }
 
+
             if( protectPeriod === null || protectPeriod ==="" || protectPeriod===" "){
               // do nothing
               protectPeriod = ""
             }else{
               protectPeriod = convertToDate(protectPeriod)
-
                 // add protection period only when the product is not "VMG PREVIEW"
                 if(product!="Vimigo Preview"){
-                    protectPeriod.setDate(protectPeriod.getDate() + 365)
+                    if(ownerTeam == '11348619'){
+                      protectPeriod.setDate(protectPeriod.getDate() + 365)
+                    }else{
+                      protectPeriod.setDate(protectPeriod.getDate() + 60)
+                    }
                 }
 
                 protectPeriod = moment(protectPeriod).format('DD MMM, YYYY')
                 //   protectPeriod = protectPeriod.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
               }
+
+
               
             status = getProtectedStatus(ownerName,protectPeriod, product)
 
-            
             var object =  {
                 deal: dealName,
                 name: companyName,
@@ -434,7 +442,6 @@ Spinner END
       function buildTable() {
         
         $.fn.dataTable.moment('DD MMM, YYYY');//sortbydate using moment js
-
 
         datatable = $("#my-table").DataTable({
           scrollX: "100%",
