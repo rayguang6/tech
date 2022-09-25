@@ -309,14 +309,14 @@ Spinner END
         const rows = json.table.rows
         
 
-        rows.forEach(async (row)=>{
+        rows.forEach((row)=>{
           const tempRow = row.c
-            var recordID = getCellValue(tempRow[0]," ")
-            var companyID = getCellValue(tempRow[1]," ")
+            // var recordID = getCellValue(tempRow[0]," ")
+            // var companyID = getCellValue(tempRow[1]," ")
             var companyName = getCellValue(tempRow[2]," ")
             var dealName = getCellValue(tempRow[3]," ")
             var product = getCellValue(tempRow[4]," ")
-            var ownerID = getCellValue(tempRow[5]," ")
+            // var ownerID = getCellValue(tempRow[5]," ")
             var ownerName = getCellValue(tempRow[6],"unassigned")
             var ownerTeam = getCellValue(tempRow[7],"")
             var closeDate = getCellValue(tempRow[8],"")
@@ -338,7 +338,7 @@ Spinner END
               protectPeriod = ""
             }else{
               protectPeriod = convertToDate(protectPeriod)
-                // add protection period only when the product is not "VMG PREVIEW"
+                // add protection period only when the product is not "VMG PREVIEW" or "Book"
                 if(product!="Vimigo Preview"|| product!="[Book] 分钱为王"){
                     if(ownerTeam == '11348619'){
                       protectPeriod.setDate(protectPeriod.getDate() + 365)
@@ -357,7 +357,7 @@ Spinner END
                 deal: dealName,
                 name: companyName,
                 product: product,
-                ownerID: ownerID,
+                // ownerID: ownerID,
                 ownerName: ownerName,
                 closeDate: closeDate,
                 protectPeriod: protectPeriod,
