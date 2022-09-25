@@ -11,8 +11,6 @@
   </head>
   <body>
 
-  <!-- Jquery CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
   <!-- Datatable CSS CDN --><link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
   
@@ -26,6 +24,14 @@
       width: 90%;
       margin: 30px auto;
     }
+
+    @media only screen and (max-width: 600px) {
+      .my-table-container{
+        width: 100%;
+        margin: 30px auto;
+      }
+    }
+
 
     tr.odd{
       /* background-color: #FFECE1 !important; */
@@ -186,8 +192,9 @@ Spinner END
 */
 
 .vimitos-header{
-  margin-top: 48px;
+  /* margin-top: 48px; */
 }
+
 
 .vimitos-header h1{
   font-size: 48px;
@@ -196,11 +203,19 @@ Spinner END
   text-align: center;
 }
 
+.back-button{
+  padding: 24px 8px;
+}
+
+.back-button span{
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .back-button a{
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
-  /* padding-left: 5%; */
   padding: 24px 5%;
   cursor: pointer;
   color: #007BFF;
@@ -240,10 +255,10 @@ Spinner END
   
 
   
+  <div class="back-button"><a href="https://top1.com.my/sales"> <span> &#8249 </span> Back To Sales Portal</a></div>
   <div class="vimitos-header">
     <h1 id="vimitos-title" class="text-center fw-bold my-2">vimiTOS</h1>
   </div>
-  <div class="back-button"><a href="https://top1.com.my/sales"> Back To Home</a></div>
 
     <div class="my-table-container p-4">
       <div class="table-responsive mb-2">
@@ -272,6 +287,11 @@ Spinner END
         </div>
       </div>
     </div>
+
+
+    <!-- Jquery CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
 
     <script>
 
