@@ -339,7 +339,7 @@ Spinner END
             }else{
               protectPeriod = convertToDate(protectPeriod)
                 // add protection period only when the product is not "VMG PREVIEW" or "Book"
-                if(product!="Vimigo Preview"|| product!="[Book] 分钱为王"){
+                if(product!="Vimigo Preview" && product!="[Book] 分钱为王"){
                     if(ownerTeam == '11348619'){
                       protectPeriod.setDate(protectPeriod.getDate() + 365)
                     }else{
