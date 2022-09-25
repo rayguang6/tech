@@ -132,7 +132,7 @@ Datatable Start (Manage Covid and User)
 
 /* outer */
 .dataTables_paginate {
-  /* border-radius: 1rem; */
+  border-radius: 1rem;
   margin-top: 10px;
   background: hsl(36, 100%, 98%);
   padding: 5px 5px;
@@ -252,9 +252,9 @@ Spinner END
           <thead>
             <tr>
               <th>Deal Name</th>
-              <th>Company Name</th>
-              <th>Deal Owner</th>
               <th>Status</th>
+              <th>Deal Owner</th>
+              <th>Company Name</th>
               <th>Product</th>
               <th>Close Date</th>
               <th>Expiry Date</th>
@@ -425,9 +425,9 @@ Spinner END
         var myRow = `
               <tr>
                   <td>${company.deal}</td>
+                  <td>${getBadge(company.status)}</td>						
+                  <td>${company.ownerName}</td>			
                   <td>${company.name}</td>
-                  <td>${company.ownerName}</td>							
-                  <td>${getBadge(company.status)}</td>							
                   <td>${company.product}</td>							
                   <td>${company.closeDate}</td>							
                   <td>${company.protectPeriod}</td>							
