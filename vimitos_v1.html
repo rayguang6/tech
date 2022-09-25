@@ -34,7 +34,7 @@
 
     .my-table-container{
       width: 90%;
-      margin: 0 auto;
+      margin: 30px auto;
     }
 
     tr.odd{
@@ -203,6 +203,7 @@ Spinner END
   font-size: 48px;
   font-family: Arial, Helvetica, sans-serif;
   color: #ff8b47;
+  text-align: center;
 }
 
 .back-button a{
@@ -210,15 +211,46 @@ Spinner END
   font-size: 16px;
   font-weight: bold;
   /* padding-left: 5%; */
-  padding: 16px 5%;
+  padding: 24px 5%;
   cursor: pointer;
+  color: #007BFF;
+  margin-bottom: 24px;
+}
+
+.back-button a.visited {color:#007BFF;}
+
+.mybadge{
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  min-width: 10px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: 99999px
+}
+
+
+
+.bg-primary{
+  background-color: #007BFF;
+}
+.bg-danger{
+  background-color: #ef1c1c
+}
+.bg-success{
+  background-color: #64DD17
 }
 
   </style>
   
 
   
-  <div class="vimitos-header d-flex align-items-center justify-content-center">
+  <div class="vimitos-header">
     <h1 id="vimitos-title" class="text-center fw-bold my-2">vimiTOS</h1>
   </div>
   <div class="back-button"><a href="https://top1.com.my/sales"> Back To Home</a></div>
@@ -231,11 +263,11 @@ Spinner END
             <tr>
               <th>Deal Name</th>
               <th>Company Name</th>
-              <th>Product</th>
               <th>Deal Owner</th>
+              <th>Status</th>
+              <th>Product</th>
               <th>Close Date</th>
               <th>Expiry Date</th>
-              <th>Status</th>
             </tr>
           </thead>
           
@@ -398,7 +430,7 @@ Spinner END
                   <td>${company.deal}</td>
                   <td>${company.name}</td>
                   <td>${company.ownerName}</td>							
-                  <td>${(company.status)}</td>							
+                  <td>${getBadge(company.status)}</td>							
                   <td>${company.product}</td>							
                   <td>${company.closeDate}</td>							
                   <td>${company.protectPeriod}</td>							
@@ -407,16 +439,16 @@ Spinner END
           $("#my-table-body").append(myRow);        
       }
 
+
       function getBadge(status) {
         switch(status){
-            
             case "Protected":
-              return `<span class="badge rounded-pill bg-opacity-75 bg-danger">${status}</span>`
+              return `<span class="mybadge bg-danger">${status}</span>`
             case "Open Deal":
-                return `<span class="badge rounded-pill bg-opacity-75 bg-success">${status}</span>`
+                return `<span class="mybadge bg-success">${status}</span>`
 
             default:
-                return `<span class="badge rounded-pill bg-opacity-75 bg-primary">${status}</span>`
+                return `<span class="mybadge bg-primary">${status}</span>`
         }
     }
 
