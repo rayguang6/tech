@@ -190,17 +190,36 @@ Spinner Start
 Spinner END
 */
 
+.vimitos-header{
+  margin-top: 48px;
+}
+
+.vimitos-header h1{
+  font-size: 48px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ff8b47;
+}
+
+.back-button a{
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  /* padding-left: 5%; */
+  padding: 16px 5%;
+  cursor: pointer;
+}
+
   </style>
   
 
-
   
+  <div class="vimitos-header d-flex align-items-center justify-content-center">
     <h1 id="vimitos-title" class="text-center fw-bold my-2">vimiTOS</h1>
+  </div>
+  <div class="back-button"><a href="https://top1.com.my/sales"> Back To Home</a></div>
 
     <div class="my-table-container p-4">
       <div class="table-responsive mb-2">
-
-        
 
         <table id="my-table" class="display" style="width: 100%">
           <thead>
@@ -216,8 +235,7 @@ Spinner END
           </thead>
           
           <tbody id="my-table-body">
-              
-
+              <!-- Inserts Table Content here -->
           </tbody>
 
         </table>
@@ -229,13 +247,14 @@ Spinner END
     </div>
 
     <script>
+
+      
       const baseURL = `https://docs.google.com/spreadsheets/d/`;
       const ssid = `1qKX3OSh8_B3b7aYm4-raqkiMCGq85bPjHJRp0cSKRvA`;
       const q1 = `/gviz/tq?`;
-
       const q2 = 'tqx=out:json';
 
-      const sheetId = `Deal`
+      const sheetId = `Deal 1`
       const q3 = `sheet=${sheetId}`
       const endpoint = `${baseURL}${ssid}${q1}&${q2}&${q3}`;
 
@@ -243,12 +262,9 @@ Spinner END
       
       var companies = []
     
-      fetchAPI(endpoint)
+      // fetchAPI(endpoint)
 
-
-      function insertOwner(owner="Unassigned"){
-        return owner
-      }
+      window.onload = fetchAPI(endpoint);
 
       // check if the cell is null, if not null then return the value
       function getCellValue(cell,textIfNull){
@@ -267,20 +283,20 @@ Spinner END
         
         var todayDate = new Date()
         todayDate.setHours(0,0,0,0)
-        console.log("today: "+todayDate);
         if(protectDate){
           var expireDate = new Date(protectDate)
-          console.log("expiredate: "+expireDate);
         }
 
-        if( (expireDate < todayDate)|| ownerName == "unassigned"  || product == "Vimigo Preview" || protectDate=="" ){
+        if((todayDate < expireDate)){
+          return "Protected"
+        }
+        else if( (todayDate > expireDate) || ownerName == "unassigned"  || product == "Vimigo Preview" || product == "[Book] 分钱为王"){
           return "Open Deal"
         }
         else{
-          return "Protected"
+          return "Contact Admin"
         }
       }
-
 
       async function fetchAPI(endpoint){
 
@@ -292,11 +308,9 @@ Spinner END
         const json = JSON.parse(tempData)
         const rows = json.table.rows
         
-        // console.log(rows)
 
         rows.forEach(async (row)=>{
           const tempRow = row.c
-          //name, product,id,closer,closeDate
             var recordID = getCellValue(tempRow[0]," ")
             var companyID = getCellValue(tempRow[1]," ")
             var companyName = getCellValue(tempRow[2]," ")
@@ -309,13 +323,6 @@ Spinner END
             var protectPeriod = getCellValue(tempRow[8],"")
             var status
 
-            // var companyName = tempRow[0]== null? "" : tempRow[0].v
-            // var product= tempRow[1]== null? "" : tempRow[1].v
-            // var ownerID = tempRow[2]== null? "" : tempRow[2].v
-            // var ownerName = tempRow[3]== null? "Unassigned" : tempRow[3].v
-            // var closeDate = tempRow[4]== null? "" : tempRow[4].v
-            // var protectPeriod = tempRow[4]== null? "" : tempRow[4].v
-            
             if( closeDate == null || closeDate ==""){
               // do nothing
               closeDate=""
@@ -332,7 +339,7 @@ Spinner END
             }else{
               protectPeriod = convertToDate(protectPeriod)
                 // add protection period only when the product is not "VMG PREVIEW"
-                if(product!="Vimigo Preview"){
+                if(product!="Vimigo Preview"|| product!="[Book] 分钱为王"){
                     if(ownerTeam == '11348619'){
                       protectPeriod.setDate(protectPeriod.getDate() + 365)
                     }else{
@@ -344,8 +351,6 @@ Spinner END
                 //   protectPeriod = protectPeriod.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
               }
 
-
-              
             status = getProtectedStatus(ownerName,protectPeriod, product)
 
             var object =  {
@@ -366,27 +371,19 @@ Spinner END
         // buildTableContent()
         spinner.setAttribute('hidden', '');
         buildTable()
-        
     }
 
     function convertToDate(string){
 
       if(string){
-
-        var splittedString = string.split("/")
-        var w1 = splittedString[0]
-        var w2 = splittedString[1]
-        var w3 = splittedString[2]
-  
-        return new Date(w2+"/"+w1+"/"+w3)
+        var s = string.split("/")
+        return new Date(s[1]+"/"+s[0]+"/"+s[2])
       }else{
         return string
       }
     }
 
-        // console.log(companies)
-
-    
+  
       // =================================================================================
       // Datatable code BELOW
 
@@ -408,7 +405,7 @@ Spinner END
 
       function getBadge(status) {
         switch(status){
-            //success
+            
             case "Protected":
               return `<span class="badge rounded-pill bg-opacity-75 bg-danger">${status}</span>`
             case "Open Deal":
@@ -419,22 +416,22 @@ Spinner END
         }
     }
 
-      function buildTableContent() {
-            for (company of companies){
-                var myRow = `
-                    <tr>
-                        <td>${company.name}</td>
-                        <td>${company.product}</td>							
-                        <td>${company.ownerName}</td>							
-                        <td>${company.closeDate}</td>							
-                        <td>${company.protectPeriod}</td>							
-                        <td>${getBadge(company.status)}</td>							
-                    </tr>
-                `;
-                $("#my-table-body").append(myRow);
-            }
+      // function buildTableContent() {
+      //       for (company of companies){
+      //           var myRow = `
+      //               <tr>
+      //                   <td>${company.name}</td>
+      //                   <td>${company.product}</td>							
+      //                   <td>${company.ownerName}</td>							
+      //                   <td>${company.closeDate}</td>							
+      //                   <td>${company.protectPeriod}</td>							
+      //                   <td>${getBadge(company.status)}</td>							
+      //               </tr>
+      //           `;
+      //           $("#my-table-body").append(myRow);
+      //       }
             
-      }
+      // }
 
       var datatable;
 
