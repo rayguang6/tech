@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>                             
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -225,21 +225,11 @@ Spinner END
 .back-button a.visited {color:#007BFF;}
 
 .mybadge{
-  display: inline-block;
-  font-size: 14px;
-  font-weight: bold;
   padding: 4px 8px;
-  border: 1px solid transparent;
-  min-width: 10px;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   border-radius: 99999px
 }
-
-
 
 .bg-primary{
   background-color: #007BFF;
@@ -292,7 +282,6 @@ Spinner END
     <!-- Jquery CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
-
     <script>
 
       const baseURL = `https://docs.google.com/spreadsheets/d/`;
@@ -300,7 +289,7 @@ Spinner END
       const q1 = `/gviz/tq?`;
       const q2 = 'tqx=out:json';
 
-      const sheetId = `Deal 1`
+      const sheetId = `Deal`
       const q3 = `sheet=${sheetId}`
       const endpoint = `${baseURL}${ssid}${q1}&${q2}&${q3}`;
 
@@ -346,7 +335,7 @@ Spinner END
       }
 
       async function fetchAPI(endpoint){
-        console.log(new Date());
+        console.log("start fetching: " + new Date().toTimeString());
         spinner.removeAttribute('hidden');
 
         const response = await fetch(endpoint)
@@ -356,20 +345,20 @@ Spinner END
         const rows = json.table.rows
 
         console.log(rows);
-        console.log(new Date());
+        console.log("finish fetching: " + new Date().toTimeString());
 
         rows.forEach((row)=>{
           const tempRow = row.c
             // var recordID = getCellValue(tempRow[0]," ")
             // var companyID = getCellValue(tempRow[1]," ")
+            var dealName = getCellValue(tempRow[1]," ")
             var companyName = getCellValue(tempRow[2]," ")
-            var dealName = getCellValue(tempRow[3]," ")
-            var product = getCellValue(tempRow[4]," ")
+            var product = getCellValue(tempRow[3]," ")
             // var ownerID = getCellValue(tempRow[5]," ")
-            var ownerName = getCellValue(tempRow[6],"unassigned")
-            var ownerTeam = getCellValue(tempRow[7],"")
-            var closeDate = getCellValue(tempRow[8],"")
-            var protectPeriod = getCellValue(tempRow[8],"")
+            var ownerName = getCellValue(tempRow[4],"unassigned")
+            var ownerTeam = getCellValue(tempRow[5],"")
+            var closeDate = getCellValue(tempRow[7],"")
+            var protectPeriod = getCellValue(tempRow[7],"")
             var status
 
             if( closeDate == null || closeDate ==""){
@@ -417,13 +406,13 @@ Spinner END
               companies.push(object)
               buildRow(object)
         }) //end foreach
-        console.log(new Date());
+        console.log("Finish building datatable rows: " + new Date().toTimeString());
 
         // buildTableContent()
         spinner.setAttribute('hidden', '');
         
         buildTable()
-        console.log(new Date());
+        console.log("Table Done: " + new Date().toTimeString());
 
     }
 
@@ -468,23 +457,6 @@ Spinner END
                 return `<span class="mybadge bg-primary">${status}</span>`
         }
     }
-
-      // function buildTableContent() {
-      //       for (company of companies){
-      //           var myRow = `
-      //               <tr>
-      //                   <td>${company.name}</td>
-      //                   <td>${company.product}</td>							
-      //                   <td>${company.ownerName}</td>							
-      //                   <td>${company.closeDate}</td>							
-      //                   <td>${company.protectPeriod}</td>							
-      //                   <td>${getBadge(company.status)}</td>							
-      //               </tr>
-      //           `;
-      //           $("#my-table-body").append(myRow);
-      //       }
-            
-      // }
 
       var datatable;
 
