@@ -23,16 +23,127 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    .my-table-container{
+    .header_title{
+      color: #ff8b47;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .search_container{
+      margin: auto;
+      width: 75vw;
+      border: 1px solid #ff8b47;
+      padding: 8px;
+      border-radius: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search_icon{
+      
+      font-size: 32px;
+      /* font-weight: bold; */
+      color: #ff8b47;
+      padding: 0px 8px;
+      aspect-ratio: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mysearchbar{
+      font-size: 20px;
+      margin: auto;
+      width: 100%;
+      padding: 0px 8px;
+      outline:none;
+      border: none;
+
+    }
+
+    .mysearchbar:focus{
+      outline:none;
+    }
+
+
+
+    .my_table_container{
       width: 90%;
       margin: 30px auto;
     }
 
+    
+
     @media only screen and (max-width: 600px) {
-      .my-table-container{
+
+      .mysearchbar{
+        font-size: 16px;
+        margin: auto;
+        width: 100%;
+      }
+
+      .my_table_container{
         width: 100%;
         margin: 30px auto;
       }
+
+      .label_container{
+        flex-wrap: wrap;
+        /* font-size: 12px; */
+      }
+    
+    }
+
+    .label_container{
+      display: flex;
+      gap: 16px;
+      width: 90vw;
+      margin: 16px auto;
+      
+    }
+    
+    
+    .label_container .label{
+      /* width: 33%; */
+      border-radius: 8px;
+      font-size: 14px;
+      border: 1px solid #28221f;
+      padding: 8px 16px;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .label_container .label div{
+      /* margin-top: 8px; */
+      color: #868079;
+    }
+
+
+
+    /*Badge*/
+    .mybadge{
+      padding: 4px 8px;
+      white-space: nowrap;
+      vertical-align: middle;
+      border-radius: 99999px;
+      color:white;
+      font-weight: 500;
+    }
+
+    .mybadge.bg-primary{
+      background-color: #007BFF;
+    }
+    .mybadge.bg-danger{
+      background-color: #ef1c1c;
+    }
+    .mybadge.bg-success{
+      background-color: #64DD17;
     }
 
 
@@ -167,8 +278,6 @@ Modal Start
       /* cursor: pointer; */
     }
 
-
-
     .modal_state {
       display: none;
     }
@@ -242,27 +351,18 @@ Modal END
 
 
 
-.searchContainer{
-  margin: auto;
-  width: 75vw;
-}
 
-.myseachbar{
-  font-size: 20px;
-  margin: auto;
-  width: 100%;
-}
 
 
     </style>
 
 
 
-  <h1>vimiTOS V2</h1>
+  
 
   <script>
     $(document).ready(function(){
-      $("#myInput").on("keyup", function() {
+      $("#my_search_input").on("keyup", function() {
         
         var value = $(this).val().toLowerCase();
         if(value.trim() == ""){
@@ -281,7 +381,7 @@ Modal END
     })
 
 // function searchFunction(){
-//   var value = $("#myInput").val().toLowerCase()
+//   var value = $("#my_search_input").val().toLowerCase()
 //   value = value.trim()
 //   console.log(value)
 
@@ -302,31 +402,67 @@ Modal END
 
  </script>
 
-  <div class="searchContainer">
-    <input type="text" id="myInput" class="myseachbar" placeholder=" type something to search...">
+<div class="header_section">
+  <a href="https://top1.com.my/sales"></a>
+  <h1 class="header_title">vimiTOS</h1>
+
+</div>
+ 
+
+  <div class="search_container">
+    <span class="search_icon">⌕</span>
+    <input type="text" id="my_search_input" class="mysearchbar" placeholder="type something to search...">
   </div>
 
-  <div class="my-table-container">
+<!-- ------------------------------------------------------------------------------------ -->
+  <div class="result_container">
+
+  </div>
+
+  <div class="label_container">
+    <div class="label">
+      <div class="">
+        <span class="mybadge bg-primary">Contact Admin</span>
+      </div>
+
+      <div>Information incomplete. Contact Admin to know more</div>
+    </div>
+    <div class="label">
+      <div>
+
+        <span class="mybadge bg-danger">Protected</span>
+      </div>
+      <div>Still in Protection Period. Only Owner can close them.</div>
+    </div>
+    <div class="label">
+      <div>  
+        <span class="mybadge bg-success">Open Deal</span>
+      </div>
+      <div>Passed Expired Date. Everyone can contact them.</div>
+    </div>
+
+  </div>
+
+  <div class="my_table_container">
 
     <table id="mytable" class="display hideModal" style="width: 100%">
-    <thead>
-      <tr>
-        <!-- <th>Index</th> -->
-        <th>Company</th>
-        <th>Status</th>
-        <th>Owner</th>
-        <th>Expiry Date</th>
+      <thead>
+        <tr>
+          <!-- <th>Index</th> -->
+          <th>Company</th>
+          <th>Status</th>
+          <th>Owner</th>
+          <th>Expiry Date</th>
 
-        <!-- <th>Deals Count</th> -->
-      </tr>
-    </thead>
-    <tbody id="mybody">
+          <!-- <th>Deals Count</th> -->
+        </tr>
+      </thead>
+      <tbody id="mybody">
 
-    </tbody>
+      </tbody>
 
     </table>
   </div> 
-
 
 
     <!-- Modal Start -->
