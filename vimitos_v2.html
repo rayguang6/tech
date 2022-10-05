@@ -12,7 +12,7 @@
   -->
 </head>
 <body>
-    <!-- Datatable CSS CDN --><link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> -->
     <!-- JQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -68,9 +68,9 @@
       outline:none;
     }
 
-
-
     .my_table_container{
+      
+      overflow-x: scroll;
       width: 90%;
       margin: 30px auto;
     }
@@ -92,7 +92,7 @@
 
       .label_container{
         flex-wrap: wrap;
-        /* font-size: 12px; */
+        font-size: 12px;
       }
     
     }
@@ -110,10 +110,12 @@
       /* width: 33%; */
       border-radius: 8px;
       font-size: 14px;
-      border: 1px solid #28221f;
+      /* border: 1px solid #28221f; */
+      box-shadow: 0 20px 34px 0 rgb(152 163 207 / 30%);
       padding: 8px 16px;
 
       display: flex;
+      flex-direction: column;
       align-items: flex-start;
       justify-content: center;
       gap: 8px;
@@ -124,6 +126,9 @@
       color: #868079;
     }
 
+    .label_badge_div{
+      /* width: 25%; */
+    }
 
 
     /*Badge*/
@@ -133,7 +138,8 @@
       vertical-align: middle;
       border-radius: 99999px;
       color:white;
-      font-weight: 500;
+      /* font-weight: bold; */
+      font-size: 12px;
     }
 
     .mybadge.bg-primary{
@@ -146,110 +152,73 @@
       background-color: #64DD17;
     }
 
+    .modal_title{
+      text-align: center;
+    }
 
-  /********************
-  Datatable Start
-  ********************/
-
-  #mytable tr:hover{
-      cursor: pointer;
-  } 
-
-
-/* search input */
-.dataTables_filter{
-  padding: 8px;
-  outline:none;
-  border: none;
-}
-
-.dataTables_filter:focus{
-  outline:none;
-  border: none;
-}
-
-/* all paginate button */
-.dataTables_wrapper .dataTables_paginate span .paginate_button {
-  font-weight: bold;
-  height: 50px;
-  width: 50px;
-  padding: 0;
-  margin-left: 0px;
-  margin: 0 2px;
-  line-height: 50px;
-  text-align: center;
-  font-size: 18px;
-  border-radius: 1rem;
-  color: #ff8b47 !important;
-  border: none !important;
-} 
-
-
-/* To Style the datatable pagination prev and next button*/
-.dataTables_wrapper .dataTables_paginate .paginate_button.previous, 
-.dataTables_wrapper .dataTables_paginate .paginate_button.next {
-  margin-left: 0px;
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0 2px;
-  border: none !important;
-  height: 50px;
-  width: 50px; 
-  padding: 0;
-  border-radius: 1rem;
-  line-height: 54px;
-  display: inline-block;
-  color: #ff8b47 !important;
-
-}
-
-/* next previous */
-.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover, 
-.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover{
-  background: #ff8b47 !important;
-  color: #ffffff !important;
-  outline:none;
-}
-
-/* current button */
-.dataTables_wrapper .dataTables_paginate span .paginate_button.current{
-  background: #ff8b47 !important;
-  color: #ffffff !important;
-  outline:none;
-} 
-.dataTables_wrapper .dataTables_paginate span .paginate_button.current:hover{
-  background: #ff8b47 !important;
-  color: #ffffff !important;
-  outline:none;
-} 
-
-/* other paginate hover */
-.paginate_button:hover{
-    background: #ff8b47 !important;
-    border:#ff8b47 !important;
-    color: white !important;
-    outline:none;
-}
-
-
-/* outer */
-.dataTables_paginate {
-  border-radius: 1rem;
-  margin-top: 10px;
-  background: hsl(36, 100%, 98%);
-  padding: 5px 5px;
-}
-
-.table-chevron{
-  font-size: 28px;
-  font-weight: bold;
-  padding: 0;
-}
-
-
+    .my_flex{
+      display: flex;
+      align-items: center;
+      /* justify-content: center; */
+      padding: 8px;
+    }
 
 /********************
-Datatable End
+Result  Table START
+********************/
+
+.vimitos_table{
+  border: 1px solid #ff8b47;
+  padding: 0;
+  margin: 0;
+
+  overflow: hidden;
+
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 20px 34px 0 rgb(152 163 207 / 30%);
+  width: 100%;
+}
+
+.vimitos_table thead{
+  width: 100%;
+  background-color: #ff8b47;
+  border-radius: 8px 8px 0 0 ;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.vimitos_table thead tr{
+  background-color: #ff8b47;
+  border-radius: 8px 8px 0 0 ;
+  overflow: hidden;
+}
+
+.vimitos_table thead tr th{
+  color: white;
+  padding: 16px 4px;
+}
+
+.vimitos_table tbody tr{
+  margin-top: 4px !important;
+  cursor: pointer;
+  padding: 8px 4px;
+  /* background-color: red; */
+  border: 1px solid #ff8b4710;
+}
+
+.vimitos_table tbody tr:hover{
+  background-color: #ff8b4730;
+}
+
+.vimitos_table tbody tr td{
+  margin-top: 50px !important;
+  cursor: pointer;
+  padding: 8px 4px;
+}
+
+/********************
+Result Table END
 ********************/
 
 
@@ -285,17 +254,18 @@ Modal Start
     .my_modal_body{
       transition: top .25s ease;
       position: absolute;
-      top: -20%;
+      top: -10%;
       right: 0;
       bottom: 0;
       left: 0;
       width: 50%;
       margin: auto;
+      
       overflow: auto;
       background: #fff;
       border-radius: 5px;
       padding: 1em 2em;
-      height: 50%;
+      height: 75%;
       z-index: 3;
     }
 
@@ -304,6 +274,7 @@ Modal Start
         width: 90%;
         height: 90%;
         box-sizing: border-box;
+        top:5%;
       }
     }
 
@@ -334,22 +305,38 @@ Modal Start
   transform: rotate(-45deg);
 }
 
-
 .showModal{
   opacity: 1;
   visibility: visible;
+
 }
 
 .hideModal{
   opacity: 0;
   visibility: hidden;
+
+}
+
+.show{
+  display: block;
+}
+
+.hide{
+  display: none;
 }
 
 /********************
 Modal END
 ********************/
 
+.prompt_search_container{
+  width: 90%;
+  margin: auto;
+}
 
+.prompt_search_container h2{
+  text-align: center;
+}
 
 
 
@@ -366,16 +353,29 @@ Modal END
         
         var value = $(this).val().toLowerCase();
         if(value.trim() == ""){
-          $("#mytable").addClass("hideModal")
-          $("#mytable").removeClass("showModal")
+          //if no value detected, hide the table
+          $("#mytable").addClass("hide")
+          // $("#mytable").removeClass("show")
+
+          $(".label_container").addClass("hide")
+          // $(".label_container").removeClass("show")
+
+          $(".prompt_search_container").removeClass("hide")
+          // $(".prompt_search_container").addClass("show")
         }else{
           
           $("#mybody tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
           });
 
-          $("#mytable").removeClass("hideModal")
-          $("#mytable").addClass("showModal")
+          $("#mytable").removeClass("hide")
+          // $("#mytable").addClass("show")
+
+          $(".label_container").removeClass("hide")
+          // $(".label_container").addClass("show")
+
+          $(".prompt_search_container").addClass("hide")
+          // $(".prompt_search_container").removeClass("show")
         }
       })
     })
@@ -408,34 +408,33 @@ Modal END
 
 </div>
  
-
   <div class="search_container">
     <span class="search_icon">⌕</span>
-    <input type="text" id="my_search_input" class="mysearchbar" placeholder="type something to search...">
+    <input type="text" id="my_search_input" class="mysearchbar" placeholder="search for company name...">
   </div>
 
 <!-- ------------------------------------------------------------------------------------ -->
-  <div class="result_container">
-
+  <div class="prompt_search_container">
+    <h2>☝️Type something on searchbar to start searching!☝️</h2>
   </div>
 
-  <div class="label_container">
+  <div class="label_container hide">
     <div class="label">
-      <div class="">
+      <div class="label_badge_div">
         <span class="mybadge bg-primary">Contact Admin</span>
       </div>
 
       <div>Information incomplete. Contact Admin to know more</div>
     </div>
     <div class="label">
-      <div>
+      <div class="label_badge_div"> 
 
         <span class="mybadge bg-danger">Protected</span>
       </div>
       <div>Still in Protection Period. Only Owner can close them.</div>
     </div>
     <div class="label">
-      <div>  
+      <div class="label_badge_div">  
         <span class="mybadge bg-success">Open Deal</span>
       </div>
       <div>Passed Expired Date. Everyone can contact them.</div>
@@ -445,16 +444,13 @@ Modal END
 
   <div class="my_table_container">
 
-    <table id="mytable" class="display hideModal" style="width: 100%">
-      <thead>
+    <table id="mytable" BORDER=0 CELLSPACING=0 class="vimitos_table hide">
+      <thead id="myhead">
         <tr>
-          <!-- <th>Index</th> -->
           <th>Company</th>
           <th>Status</th>
           <th>Owner</th>
           <th>Expiry Date</th>
-
-          <!-- <th>Deals Count</th> -->
         </tr>
       </thead>
       <tbody id="mybody">
@@ -675,11 +671,23 @@ Modal END
       var index = 0
       for(company of companies){
         index++
+
+        // var escapedString = company.companyName.replace(/'/g, "\\'");
+
+        // if(company.companyName.indexOf("'")>0){
+        //   console.log("company: " + company.companyName);
+        //   console.log("escaped: "+escapedString);
+        // }
+        
+
+        // TODO: modify companyName with single or double quotes
+
         var row = 
+
         `
-        <tr onclick="getDeals('${company.companyName}')">
+        <tr onclick='getDeals("${company.companyName}")'>
           <td>${company.companyName}</td>
-          <td>${company.status}</td>
+          <td>${getBadge(company.status)}</td>
           <td>${company.companyOwner}</td>
           <td>${company.expired}</td>
 
@@ -702,6 +710,18 @@ Modal END
       }else{
         return string
       }
+    }
+
+    function getBadge(status) {
+        switch(status){
+            case "Protected":
+              return `<span class="mybadge bg-danger">${status}</span>`
+            case "Open Deal":
+                return `<span class="mybadge bg-success">${status}</span>`
+
+            default:
+                return `<span class="mybadge bg-primary">${status}</span>`
+        }
     }
 
     // check products and team(later check partner) to decide how many days to add
@@ -762,6 +782,33 @@ Modal END
 
     }
 
+
+
+    function myBubbleSort(arr){
+  
+    for(var i = 0; i < arr.length; i++){
+      
+        // Last i elements are already in place 
+        for(var j = 0; j < ( arr.length - i - 1 ); j++){
+          
+          // Checking if the item at present iteration
+          // is greater than the next iteration
+          if( arr[j].closedDate == "" || moment(arr[j].closedDate).isBefore(arr[j+1].closedDate)
+            // arr[j] < arr[j+1] 
+            ){
+            
+            // If the condition is true then swap them
+            var temp = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j+1] = temp
+          }
+        }
+      }
+      return arr
+    }
+
+
+
     
 
     function getDeals(companyName){
@@ -771,38 +818,35 @@ Modal END
         if(company.companyName == companyName){
 
           dealsArray = company.deals
+          console.log(dealsArray);
           
-          dealsArray.sort(
-            function(a,b){
-            a.date=""? a.date="" : a.date=""
-            var dateA = new Date(a.closedDate)
-            var dateB = new Date(b.closedDate)
-            return (dateB) - (dateA) 
-          })
+          var sortedArray = myBubbleSort(dealsArray)
+          console.log(sortedArray);
 
           var companyDetails = 
           `
-          <h2>${company.companyName}</h2>
-          <p>${company.expired}</p>
-          <p>${company.companyOwner}</p>
-          <p>${company.status}</p>
+          <h2 class="modal_title">${company.companyName}</h2>
+          <div class="my_flex"> Company Owner: &nbsp; <strong>${company.companyOwner}</strong></div>
+          <div class="my_flex"> Expired Date : &nbsp;<strong>${company.expired}</strong></div>
+          <div class="my_flex"> Protection Status:&nbsp;${getBadge(company.status)} </div>
+       
           `
           $('.my_modal_content').append(companyDetails)
 
 
           var dealTable = `
-          <table border="1">
+          <table BORDER=0 CELLSPACING=0 class="vimitos_table">
             <thead>
               <tr>
-                <td>Product</td>
-                <td>Deal Owner</td>
-                <td>Closed Date</td>
+                <th>Product</th>
+                <th>Deal Owner</th>
+                <th>Closed Date</th>
               </tr>
             </thead>
             <tbody>
           `
 
-          for(deal of dealsArray){
+          for(deal of sortedArray){
             var dealRow = `
             <tr>
               <td>${deal.product}</td>
@@ -810,15 +854,12 @@ Modal END
               <td>${deal.closedDate}</td>
             </tr>`
 
-            
             dealTable += dealRow
-
           }
 
           dealTable += `</tbody></table>`
           
           $('.my_modal_content').append(dealTable)
-      
         }
 
       }
