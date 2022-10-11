@@ -196,7 +196,9 @@ Result  Table START
 
 .vimitos_table thead tr th{
   color: white;
-  padding: 16px 4px;
+  padding: 16px 16px;
+  text-align: left;
+
 }
 
 .vimitos_table tbody tr{
@@ -214,7 +216,7 @@ Result  Table START
 .vimitos_table tbody tr td{
   margin-top: 50px !important;
   cursor: pointer;
-  padding: 8px 4px;
+  padding: 8px 16px;
 }
 
 /********************
@@ -676,6 +678,7 @@ Modal END
         `
 
         $('#mybody').append(row)
+        console.log("loop my table: " + new Date().toTimeString());
       }
       // buildDataTable()
       console.log("finish building table: " + new Date().toTimeString());
@@ -726,7 +729,6 @@ Modal END
       }else{
         // return moment(closedDate).format('DD MMM, YYYY')
         return closedDate
-
       }
       
 
@@ -810,7 +812,7 @@ Modal END
         if(company.companyName == companyName){
 
           dealsArray = company.deals
-          console.log(dealsArray);
+          // console.log(dealsArray);
           
           //sort array
           var sortedArray = myBubbleSort(dealsArray)
