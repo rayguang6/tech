@@ -419,7 +419,7 @@ Modal END
         <span class="mybadge bg-primary">Contact Admin</span>
       </div>
 
-      <div>Information incomplete. Contact Admin to know more</div>
+      <div>Information incomplete. Contact Admin to know more.</div>
     </div>
     <div class="label">
       <div class="label_badge_div"> 
@@ -434,7 +434,6 @@ Modal END
       </div>
       <div>Passed Expired Date. Everyone can contact them.</div>
     </div>
-
   </div>
 
   <div class="my_table_container">
@@ -497,7 +496,7 @@ Modal END
 
     // Read Data From Google Sheet
     async function fetchSheet(URL){
-      console.log("start fetching: " + new Date().toTimeString());
+      // console.log("start fetching: " + new Date().toTimeString());
 
       const response = await fetch(URL)
       const data = await response.text()
@@ -505,7 +504,7 @@ Modal END
       const json = JSON.parse(tempData)
       const rows = json.table.rows
 
-      console.log("finish fetching: " + new Date().toTimeString());
+      // console.log("finish fetching: " + new Date().toTimeString());
       
       rows.forEach((row)=>{
         const rowData = row.c
@@ -548,7 +547,6 @@ Modal END
 
       console.log(companies); //final nested companies list
       
-      console.log("finish looping: " + new Date().toTimeString());
 
       buildTable()
       
@@ -649,6 +647,7 @@ Modal END
 
     }
 
+
     // function to loop companies list and build table
     function buildTable(){
       // var index = 0
@@ -665,10 +664,14 @@ Modal END
 
         // TODO: modify companyName with single or double quotes
 
+        // var companyName = removeApostrophe(company.companyName)
+        var companyName = escape(company.companyName)
+        
+
         var row = 
 
         `
-        <tr onclick='getDeals("${company.companyName}")'>
+        <tr onclick='getDeals("${companyName}")'>
           <td>${company.companyName}</td>
           <td>${getBadge(company.status)}</td>
           <td>${company.companyOwner}</td>
@@ -678,10 +681,10 @@ Modal END
         `
 
         $('#mybody').append(row)
-        console.log("loop my table: " + new Date().toTimeString());
+        // console.log("loop my table: " + new Date().toTimeString());
       }
       // buildDataTable()
-      console.log("finish building table: " + new Date().toTimeString());
+      // console.log("finish building table: " + new Date().toTimeString());
     }
 
     // convert the date from google sheet into JS date
@@ -689,7 +692,6 @@ Modal END
     function convertToDate(string){
       if(string){
         var s = string.split("/")
-        // var date =  moment(s[1]+"/"+s[0]+"/"+s[2]).format('DD MMM, YYYY')
         var date =  new Date(s[1]+"/"+s[0]+"/"+s[2]).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
 
         return date
@@ -753,26 +755,6 @@ Modal END
       }
 
 
-
-      // if(expiredDate == "Invalid date" || expiredDate == "undefined" || expiredDate == null || expiredDate==''|| expiredDate==" "){
-      //   return "Contact Admin"
-      // }
-      // else{
-      //   if(( moment(expire).isBefore(today)) || ownerName == ""){
-      //     return "Open Deal"
-      //   }else if( moment(expire).isAfter(today) || moment(expire).isSame(today)){
-      //     return "Protected"
-      //   }else{
-      //     return "Unknown Status"
-      //   }
-      // }
-
-      //Open Deal = date passed OR owner unknown
-
-      //Contact Owner = date unknown
-      
-      //protected = date is stil protected
-
     }
 
 
@@ -806,6 +788,10 @@ Modal END
     
 
     function getDeals(companyName){
+      companyName = unescape(companyName)
+
+      console.log("passed parameter: "+ companyName)
+
       $('.my_modal_content').empty()
 
       for(company of companies){
