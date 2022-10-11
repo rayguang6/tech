@@ -16,7 +16,6 @@
     <!-- JQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
     <style>
 
     *, html, body{
@@ -352,17 +351,14 @@ Modal END
     $(document).ready(function(){
       $("#my_search_input").on("keyup", function() {
         
-        var value = $(this).val().toLowerCase();
-        if(value.trim() == ""){
+        var value = $(this).val().toLowerCase().trim();
+        if(value == ""){
           //if no value detected, hide the table
           $("#mytable").addClass("hide")
-          // $("#mytable").removeClass("show")
 
           $(".label_container").addClass("hide")
-          // $(".label_container").removeClass("show")
 
           $(".prompt_search_container").removeClass("hide")
-          // $(".prompt_search_container").addClass("show")
         }else{
           
           $("#mybody tr").filter(function() {
@@ -370,13 +366,10 @@ Modal END
           });
 
           $("#mytable").removeClass("hide")
-          // $("#mytable").addClass("show")
 
           $(".label_container").removeClass("hide")
-          // $(".label_container").addClass("show")
 
           $(".prompt_search_container").addClass("hide")
-          // $(".prompt_search_container").removeClass("show")
         }
       })
     })
@@ -408,7 +401,6 @@ Modal END
   <h1 class="header_title">vimiTOS</h1>
 
 </div>
- 
   <div class="search_container">
     <span class="search_icon">⌕</span>
     <input type="text" id="my_search_input" class="mysearchbar" placeholder="search for company name...">
@@ -416,7 +408,7 @@ Modal END
 
 <!-- ------------------------------------------------------------------------------------ -->
   <div class="prompt_search_container">
-    <h2>☝️☝️☝️Type something on searchbar to start searching!</h2>
+    <h2>Search company to check their eligibility date</h2>
   </div>
 
   <div class="label_container hide">
@@ -574,6 +566,8 @@ Modal END
     // function to check if object exist inside the array
     function insertObject(companyObject, dealObject){
 
+      // Deal Sequence
+
       // check from 'companies' array, whether this company name is exist
       var result = $.grep(companies, function(e){ return e.companyName == companyObject.companyName})
 
@@ -582,12 +576,17 @@ Modal END
 
       //get expired date based on the closed date
       // 才可以决定要不要从把deals details UPDATE 去company deals
-      if(closedDate ==""){
+      if(closedDate ===""){
         expiredDate = ""
       }else{
         //will return a date, whether +60days or +365days
         expiredDate = getExpiredDate(closedDate, dealObject.product, dealObject.ownerTeam)
+        
+        
+
       }
+
+      //====================================
 
       if (result.length === 0) {
       // 代表没有这个公司在companies list， 所以可以直接把details 丢进去
@@ -603,6 +602,8 @@ Modal END
         companyObject.deals.push(dealObject)
         companies.push(companyObject)
 
+
+
       }
       else if (result.length === 1) {
         // property found, access the foo property using result[0].foo
@@ -617,61 +618,40 @@ Modal END
         //current expired from the company array
         var existingExpired = (result[0].expired) //有可能是''
 
-        if(result[0].companyOwner=="" && (existingExpired ==""|| existingExpired=="Invalid Date")){
-          // 直接replace
+        if(result[0].companyOwner == "" && (existingExpired =="" || existingExpired=="Invalid Date")){
+          // 当目前的owner和expired都是空的    就直接replace
 
           result[0].expired = expiredDate
           result[0].companyOwner = dealObject.ownerName
-          result[0].status = getStatus(expiredDate, companyObject.companyOwner)
+          result[0].status = getStatus(expiredDate, dealObject.ownerName)
 
         }else{
 
           if(expiredDate=="" || expiredDate =="Invalid Date"){
             //if expired date is null, do nothing
 
-          }else if( (moment(expiredDate).isAfter(existingExpired)) ){
+
+          // }else if( (moment(expiredDate).isAfter(existingExpired)) ){
+          }else if( (new Date(expiredDate) > new Date(existingExpired)) ){
             //REPLACE
 
             result[0].expired = expiredDate
             result[0].companyOwner = dealObject.ownerName
-            result[0].status = getStatus(expiredDate, companyObject.companyOwner)
+            result[0].status = getStatus(expiredDate, dealObject.ownerName)
+            
           }
 
         }
         
-
-
-        // if(expiredDate=="" || expiredDate =="Invalid Date"){
-        //   // do nothing on company object
-        // }else{
-
-        //   //#### LATEST CLOSED DATE 最优先！
-        //   //如果existing 是kosong， 就直接replace
-        //   if(existingExpired==""){
-        //     // REPLACE IT
-        //   }
-
-        //   if(  (moment(expiredDate).isAfter(existingExpired)) || result[0].expired == "undefined" || result[0].expired == '' || result[0].expired == null){
-        //     //update the company expire date 
-        //     result[0].expired = expiredDate
-                      
-        //     //update company owner
-        //     result[0].companyOwner = dealObject.ownerName
-            
-        //     //set status
-        //     result[0].status = getStatus(expiredDate, companyObject.companyOwner)
-        //   }
-        // }
-
       }
 
     }
 
     // function to loop companies list and build table
     function buildTable(){
-      var index = 0
+      // var index = 0
       for(company of companies){
-        index++
+        // index++
 
         // var escapedString = company.companyName.replace(/'/g, "\\'");
 
@@ -706,7 +686,9 @@ Modal END
     function convertToDate(string){
       if(string){
         var s = string.split("/")
-        var date =  moment(s[1]+"/"+s[0]+"/"+s[2]).format('DD MMM, YYYY')
+        // var date =  moment(s[1]+"/"+s[0]+"/"+s[2]).format('DD MMM, YYYY')
+        var date =  new Date(s[1]+"/"+s[0]+"/"+s[2]).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+
         return date
       }else{
         return string
@@ -736,9 +718,15 @@ Modal END
       if (nonProduct.indexOf(product) === -1){
 
         //TODO: check team, partner +365, squad +60
-        return moment(closedDate).add(365, 'days').format('DD MMM, YYYY')
+        // return moment(closedDate).add(365, 'days').format('DD MMM, YYYY')
+        var closeDate = new Date(closedDate)
+        closeDate.setDate(closeDate.getDate() + 365)
+        return closeDate.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+
       }else{
-        return moment(closedDate).format('DD MMM, YYYY')
+        // return moment(closedDate).format('DD MMM, YYYY')
+        return closedDate
+
       }
       
 
@@ -746,15 +734,17 @@ Modal END
 
     //function check status
     function getStatus(expiredDate, ownerName){
-      var today = moment().format('DD MMM, YYYY')
-      // var expire = moment(expiredDate).format('DD MMM, YYYY')
+      // var today = moment().format('DD MMM, YYYY')
+      var today = new Date()
+      var expiry = new Date(expiredDate)
 
 
       // if either one of owner name or expire date is empty, make it CONTACT ADMIN
-      if(ownerName=="" || expiredDate == ""){
+      if(ownerName === "" || expiredDate === ""){
         return "Contact Admin"
       }
-      else if((moment(expiredDate).isBefore(today))){
+
+      else if(((expiry) < (today))){
         return "Open Deal"
       }else{
         return "Protected"
@@ -794,9 +784,10 @@ Modal END
           
           // Checking if the item at present iteration
           // is greater than the next iteration
-          if( arr[j].closedDate == "" || moment(arr[j].closedDate).isBefore(arr[j+1].closedDate)
-            // arr[j] < arr[j+1] 
-            ){
+
+          // if( arr[j].closedDate == "" || moment(arr[j].closedDate).isBefore(arr[j+1].closedDate)
+          if( arr[j].closedDate == "" || new Date(arr[j].closedDate) < new Date(arr[j+1].closedDate))
+          {
             
             // If the condition is true then swap them
             var temp = arr[j]
@@ -821,8 +812,8 @@ Modal END
           dealsArray = company.deals
           console.log(dealsArray);
           
+          //sort array
           var sortedArray = myBubbleSort(dealsArray)
-          console.log(sortedArray);
 
           var companyDetails = 
           `
@@ -893,46 +884,48 @@ Modal END
 
 
     //Initialise Datatable
-    var datatable
+    // var datatable
 
-    function buildDataTable() {
+    // function buildDataTable() {
 
-        $.fn.dataTable.moment('DD MMM, YYYY');//sortbydate using moment js
+    //     $.fn.dataTable.moment('DD MMM, YYYY');//sortbydate using moment js
 
-        datatable = $("#mytable").DataTable({
-          scrollX: "100%",
+    //     datatable = $("#mytable").DataTable({
+    //       scrollX: "100%",
           
-          scrollCollapse: true,
-          language: {
-            paginate: {
-              previous: `<p class=".paginate_button .previous"> &#x2039; </p>`,
-              next: `<span class=".paginate_button .next"> &#x203A; </span>`
-              // previous:'<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
-            },
-          },
-        });
-    }
+    //       scrollCollapse: true,
+    //       language: {
+    //         paginate: {
+    //           previous: `<p class=".paginate_button .previous"> &#x2039; </p>`,
+    //           next: `<span class=".paginate_button .next"> &#x203A; </span>`
+    //           // previous:'<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+    //         },
+    //       },
+    //     });
+    // }
 
 
 
     // make left right key to go next page datatable
-    $(document).keyup((evt) => {
-      if (evt.key === 'ArrowLeft')
-        $('#mytable_previous').click()
-      if (evt.key === 'ArrowRight')
-        $('#mytable_next').click()
-    });
+    // $(document).keyup((evt) => {
+    //   if (evt.key === 'ArrowLeft')
+    //     $('#mytable_previous').click()
+    //   if (evt.key === 'ArrowRight')
+    //     $('#mytable_next').click()
+    // });
 
 
   </script>
 
 
 <!-- Datatable JS -->
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
 
-<!-- moment JS CDN --><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<!-- moment JS CDN -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script> -->
 
-  <!-- sort date datatable moment JS CDN --><script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
+  <!-- sort date datatable moment JS CDN -->
+  <!-- <script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script> -->
 
 </body>
 </html>
