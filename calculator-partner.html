@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Calculator V2</title>
+</head>
+<body>
+    <!-- Build a new calculator from scratch -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <style>
+        /* 
+        
+        primary: #FF8B4C
+        Background #FFF9F5
+        Primary Text #28221F
+        Tertiary Text #868079
+        */
+
+        h1,h2,h3,h4,h5,h6{
+            margin:0 !important;
+            padding:0 !important;
+        }
+
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            color: #28221F !important;
+            /* background-color: #FFF9F5; */
+        }
+
+        .calculator-container{
+            background-color: white !important;
+            overflow: hidden;
+            border: 1px solid #FF8B4C !important;
+            border-radius: 16px;
+            margin: auto;
+        }
+
+        .calculator-header{
+            background-color: #FF8B4C !important;
+            color: #FFFFFF !important;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .calculator-header h2, .calculator-header h4{
+            color: #FFFFFF !important;
+        }
+
+        .header-left-col{
+            width: 66%;
+            font-size: 24px;
+        }
+        
+        .header-left-col h2{
+            text-align: left;
+        }
+
+        .header-right-col{
+            width: 34%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: right;
+        }
+
+        .header-right-col h4{
+            margin: 0;
+            padding: 4px 8px;
+            font-size: 20px;
+        }
+
+
+
+
+
+
+        .calculator-body{
+            min-height: 200px;
+            padding: 24px 64px;
+        }
+
+        .title-row{
+            padding: 0;
+            margin: 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 139, 76,30%);
+            font-size: 24px;
+        }
+
+        .title-row h6{
+            font-weight: bold;
+            color: #FF8B4C !important;
+            text-align: left;
+            
+        }
+        
+        .myrow{
+            display: flex;  
+            align-items: center;
+            justify-content: center;
+        }
+
+        .myrow .mycol1{
+            width: 50%;
+        }
+
+        .myrow .mycol2{
+            width:25%;
+            text-align: left;
+        }
+
+        .myrow div h6 {
+            /* text-align: center; */
+            /* font-size: 16px; */
+            margin: 0;
+        }
+
+        .product-row *{
+            padding: 0;
+            margin: 0;
+        }
+
+        .product-row{
+            margin-top: 24px;
+        }
+
+        .product-col{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title{
+            font-size: 20px;
+            text-align: left !important;
+        }
+
+        .sales-col, .commission-col{
+            font-size: 20px;
+        }
+
+        .increment-group{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* justify-content: center; */
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .increment-group .quantity{
+            min-width: 48px;
+            text-align: center;
+            padding: 0 8px;
+            font-size: 20px;
+            /* font-weight: bold; */
+            border: none;
+            outline: none;
+            width: min-content;
+            max-width: 32px;
+        }
+
+        .increment-group button{
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(315deg, #FF8B4C 0%, #ff8b4dbf 100%);
+            box-shadow: 4px 4px 16px #F7ECE1;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            width: 100%;
+            height: 100%;
+            min-width: 24px;
+            min-height: 24px;
+            max-height: 36px;
+            max-width: 36px;
+            cursor: pointer;
+            aspect-ratio: 1 !important;
+            box-shadow: 0px 3px 20px rgba(255, 234, 224, 0.8);
+
+        }
+
+        .calculator-container{
+            position: relative;
+        }
+
+        .calculator-footer{
+            background: linear-gradient(90deg, #62EF8C 0%, #1AD4A3 100%);
+            border-radius: 8px;
+            color: white !important;
+            padding: 24px 16px;
+           
+        }
+
+        .calculator-footer h2, .calculator-footer h3{
+            color: white !important;           
+        }
+
+        .calculator-footer > *{
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        #total-sales{
+            font-size: 32px;
+        }
+
+        #total-commission{
+            font-size: 48px;
+        }
+
+
+
+        /* Mobile Stylling */
+        @media only screen and (max-width:400px){
+            .header-left-col h2{
+                font-size: 16px;
+            }
+
+            .header-right-col h4{
+                font-size: 14px;
+                font-weight: normal;
+            }
+
+            .title-row{
+                font-size: 14px;
+            }
+
+            .product-title{
+                font-size: 10px;
+            }
+
+            .increment-group .quantity{
+            min-width: 16px;
+            text-align: center;
+            padding: 0 4px;
+            font-size: 16px;
+            max-width: 24px;
+        }
+
+        .increment-group button{
+            font-size: 16px;
+
+            max-width: 28px;
+            max-height: 28px;
+
+        }
+
+        .sales-col, .commission-col {
+            font-size: 12px;
+        }
+
+        .calculator-body {
+            min-height: 200px;
+            padding: 16px;
+        }
+
+        .header-left-col {
+            width: 34%;
+            font-size: 24px;
+        }
+
+        .header-right-col {
+            width: 66%;
+            font-size: 16px;
+        }
+
+        #total-sales{
+            font-size: 20px;
+        }
+        
+        #total-commission{
+            
+            font-size: 24px;
+        }
+
+        .increment-group{
+            margin-top: 4px;
+        }
+
+        .product-row{
+            margin-top: 16px;
+        }
+
+        }
+
+
+        .limited_offer{
+            color:red !important;
+            font-size: 12px;
+            text-align:left !important;
+        }
+
+
+
+    </style>
+
+    <div class="calculator-container">
+
+        <div class="calculator-header">
+            <div class="header-left-col">
+                <h2>Partner Commission Calculator</h2>
+            </div>
+            <div class="header-right-col">
+                <h4>Total Sales: <strong>RM <span id="header-sales">0</span></strong> </h4>
+                <h4>Total Commission: <strong>RM <span id="header-commission">0</span> </strong></h4>
+            </div>
+        </div>
+
+        <div class="calculator-body">
+            <div class="title-row myrow">
+                <div class="mycol1"><h6>Products</h6></div>
+                <div class="mycol2"><h6>Sales</h6></div>
+                <div class="mycol2"><h6>Commission</h6></div>
+            </div>
+
+        </div>
+
+        <div class="calculator-footer">
+            <h3>Total Sales: RM <span id="total-sales">0</span></h3>
+            <h2>Total Commission: RM <span id="total-commission">0</span></h2>
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        var products = [
+            {
+                id:"vft",
+                name: "分钱为王",
+                price: 3880,
+                commission: 2716,
+            },
+            {
+                id:"vft-cap",
+                name: "分钱为王 Corporate Annual Plan",
+                price: 31040,
+                commission: 12416,
+            },
+            {
+                id:"vimigo",
+                name: "Vimigo Package",
+                price: 21600,
+                commission: 6182,
+            },
+            {
+                id:"vimigo3",
+                name: "Vimigo3.0 Only",
+                price: 11760,
+                commission: 4704,
+            },
+            {
+                id:"founder",
+                name: "Founder",
+                price: 168000,
+                commission: 67200,
+            },
+            {
+                id:"partnership",
+                name: "Partnership",
+                price: 256000,
+                commission: 102400,
+            },
+            {
+                id:"club",
+                name: "TOP1% Club",
+                price: 10000,
+                commission: 2000,
+            }
+        ]
+
+        $( document ).ready(function() {
+            buildProductRow()
+            calculate()
+        })
+
+        function buildProductRow(){
+
+            for(product of products){
+                if(product.id=="club"){
+                    var productRow = `
+                    <div class="product-row myrow">
+
+                    <div class="product-col mycol1">
+                        <div class="title-col">
+                            <h5 class="limited_offer">Limited Time Offer!</h5>
+                            <h4 class="product-title">${product.name}</h4>
+                        </div>
+                        <div class="increment-group">
+                            <button class="minus-btn" onclick="minus('${product.id}')">-</button>
+                            <input readonly type="text" name="" id="${product.id}-quantity" value="0" class="quantity">
+                            <button class="minus-btn" onclick="plus('${product.id}')">+</button>
+                        </div>
+                    </div>
+
+
+                    <div class="sales-col mycol2">
+                        RM <span id="${product.id}-sales">0</span>
+                    </div>
+                    <div class="commission-col mycol2">
+                        RM <span id="${product.id}-commission">0</span>
+                    </div>
+                    </div>
+                `
+
+                }else{
+                var productRow = `
+                    <div class="product-row myrow">
+
+                    <div class="product-col mycol1">
+                        <div class="title-col">
+                            <h4 class="product-title">${product.name}</h4>
+                        </div>
+                        <div class="increment-group">
+                            <button class="minus-btn" onclick="minus('${product.id}')">-</button>
+                            <input readonly type="text" name="" id="${product.id}-quantity" value="0" class="quantity">
+                            <button class="minus-btn" onclick="plus('${product.id}')">+</button>
+                        </div>
+                    </div>
+
+
+                    <div class="sales-col mycol2">
+                        RM <span id="${product.id}-sales">0</span>
+                    </div>
+                    <div class="commission-col mycol2">
+                        RM <span id="${product.id}-commission">0</span>
+                    </div>
+                    </div>
+                `
+                }
+                $(".calculator-body").append(productRow)
+            }
+        }
+
+        function plus(quantityName){
+            var inputField;
+            inputField = quantityName+'-quantity'
+
+            var quantity = document.getElementById(inputField).value++
+            calculate()
+        }
+
+        function minus(quantityName){
+            var inputField;
+            inputField = quantityName + '-quantity'
+            quantity = document.getElementById(inputField).value
+            if (quantity>0){
+                document.getElementById(inputField).value--
+            }
+
+            calculate()
+        }
+
+        function calculate(){
+            //update sales & commission of each product row
+            
+            var totalSales =  0
+            var totalCommission = 0
+
+            
+            for(product of products){
+                
+                var quantity = Number($(`#${product.id}-quantity`).val())
+                
+                var sales = quantity * product.price
+                var commission = quantity * product.commission
+
+                totalSales += sales
+                totalCommission += commission
+
+                $(`#${product.id}-sales`).text(sales.toLocaleString())
+                $(`#${product.id}-commission`).text(commission.toLocaleString())
+
+            }
+            
+            $("#header-sales").text(totalSales.toLocaleString())
+            $("#total-sales").text(totalSales.toLocaleString())
+            $("#header-commission").text(totalCommission.toLocaleString())
+            $("#total-commission").text(totalCommission.toLocaleString())
+
+        }
+
+
+        
+        // keep track when changed value
+        $(":input").bind('keyup mouseup', function () {
+            calculate()
+        });
+    </script>
+
+
+    
+</body>
+</html>

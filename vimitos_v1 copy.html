@@ -15,6 +15,7 @@
   <!-- Datatable CSS CDN --><link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
   
   <style>
+
     *, html, body{
       font-family: Arial, Helvetica, sans-serif;
     }
@@ -141,16 +142,6 @@ Datatable Start (Manage Covid and User)
   margin-top: 10px;
   background: hsl(36, 100%, 98%);
   padding: 5px 5px;
-
-  display: none; /*temporarily hide it*/
-}
-
-.dataTables_info{
-  display: none;
-}
-
-.dataTables_length{
-  display: none;
 }
 
 
@@ -253,7 +244,7 @@ Spinner END
   </style>
   
 
-
+  
   <div class="back-button"><a href="https://top1.com.my/sales"> <span> &#8249 </span> Back To Sales Portal</a></div>
   <div class="vimitos-header">
     <h1 id="vimitos-title" class="text-center fw-bold my-2">vimiTOS</h1>
@@ -364,8 +355,8 @@ Spinner END
             var companyName = getCellValue(tempRow[2]," ")
             var product = getCellValue(tempRow[3]," ")
             // var ownerID = getCellValue(tempRow[5]," ")
-            var ownerName = getCellValue(tempRow[5],"unassigned")
-            var ownerTeam = getCellValue(tempRow[6],"")
+            var ownerName = getCellValue(tempRow[4],"unassigned")
+            var ownerTeam = getCellValue(tempRow[5],"")
             var closeDate = getCellValue(tempRow[7],"")
             var protectPeriod = getCellValue(tempRow[7],"")
             var status

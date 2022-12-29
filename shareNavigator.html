@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Document</title>
+
+    <style>
+        .shareBtn{
+            color: #E0AB48;
+            background-color: transparent;
+            border-radius: 10px;
+            border: 2px solid #E0AB48;
+            padding: 15px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: auto;
+            text-align: center;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <button class="shareBtn" onclick="share('https://topc.me/08vft')">Share &nbsp; <i class="fa fa-share" aria-hidden="true"></i></button>
+
+    <script>
+        async function share(value){
+
+            const data = {
+                url: value
+            }
+            await navigator.share(data)
+        }
+
+    </script>
+</body>
+</html>

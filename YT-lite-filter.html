@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Cards with filter for one products -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+
+        html,body{
+            scroll-behavior: smooth !important;
+            font-family: 'Noto Sans SC', sans-serif !important;
+        }
+
+        h4{
+            text-align: center;
+        }
+
+        .testimonial-main-container{
+        }
+
+        .testimonial-container{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .testimonial-row{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items:flex-start;
+            justify-content: center;
+        }
+
+        
+        .video-card{
+            /* margin: 12px; */
+            text-align: left;
+            overflow: hidden;
+            transition: transform .2s; /* Animation */
+
+            animation: fadeInAnimation ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+
+            border-radius: 16px;
+            padding-bottom: 8px;
+        }
+
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .video-card:hover{
+            transform: scale(1.05);
+            box-shadow: 0px 3px 20px rgba(255, 234, 224, 0.8);
+            padding-bottom: 16px;
+
+        }
+
+        .video-container{
+            border-radius: 16px !important;
+            overflow: hidden;
+        }
+
+        .video-details-container{
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            /* align-self: normal; */
+            height: 100% !important;
+            font-family: 'Noto Sans SC', sans-serif !important;
+            font-weight: bold !important;
+        }
+
+        .video-details-container .testimonial-video-industry{
+            font-size: 12px !important;
+            font-weight: normal;
+            text-align: left;
+            width:fit-content;
+            border-radius: 8px;
+            padding: 4px 8px !important;
+            border: 1px solid #FF8B4C !important;
+            color: #FF8B4C !important;
+            margin-top: 8px !important;
+        }
+
+        .video-details-container .testimonial-video-title{
+            font-family: 'Noto Sans SC', sans-serif !important;
+            font-size: 16px !important;
+            text-align: left;
+            margin-top: 4px !important;
+        }
+
+        .youtube-player {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+        }
+
+        .youtube-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            background: transparent;
+        }
+
+        .youtube-player img {
+            object-fit: cover;
+            display: block;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+            max-width: 100%;
+            width: 100% !important;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: none;
+            height: auto;
+            cursor: pointer;
+            -webkit-transition: 0.4s all;
+            -moz-transition: 0.4s all;
+            transition: 0.4s all;
+        }
+
+        .youtube-player img:hover {
+            -webkit-filter: brightness(75%);
+            -moz-filter: brightness(75%);
+            filter: brightness(75%);
+        }
+
+        .youtube-player .play {
+            height: 72px;
+            width: 72px;
+            left: 50%;
+            top: 50%;
+            margin-left: -36px;
+            margin-top: -36px;
+            position: absolute;
+            background: url("https://www.top1.com.my/wp-content/uploads/playButton.png") no-repeat !important;
+            cursor: pointer;
+        }
+
+
+
+        .filter-button{
+            /* background-color: #FFF !important; */
+            color: #FF8B4C !important;
+            /* box-shadow: 0 20px 34px 0 rgb(152 163 207 / 30%); */
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            padding: 4px 16px !important;
+            height: 100%;
+
+            white-space: nowrap;
+            list-style: none;
+            font-size: 16px !important;
+        }
+        .filter-button:hover{
+            color: #FFF !important;
+            background-color: #ff8b4ce7 !important;
+            /* opacity: 0.9; */
+        }
+
+        .pills-container{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            gap:5px;
+            height: 100%;
+            width: 100%;
+            max-height: 100px;
+            padding: 15px;
+            /* padding-left: 50px; */
+        }
+        
+        .filter-container{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* border: 1px solid gold; */
+        }
+
+        .pills-container {
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+
+            scroll-behavior: smooth !important;
+        }
+        .pills-container::-webkit-scrollbar { 
+            display: none;  /* Safari and Chrome */
+        }
+        
+        .pills-container .active{
+            background-color: #FF8B4C !important;
+            color: white !important;
+        }
+
+        .hide{
+            display: none !important;
+        }
+
+        #scroll-left, #scroll-right{
+            transition: all .5s ease-in;
+            
+            background-color: transparent;
+            aspect-ratio: 1;
+            /* border: 1px solid #FF8B4C; */
+            border: none;
+            color: #FF8B4C !important;
+            border-radius: 50% !important;
+            font-size: 16px;
+            font-weight: bold;
+            font-weight: 900 !important;
+
+            /* padding: 8px !important; */
+        }
+
+        @media only screen and (min-width:360px){
+            .video-card{
+                margin:12px
+            }
+        }
+
+        @media only screen and (max-width:960px) {
+            .video-col{
+                width: 100% !important;
+            }
+        }
+
+        
+        @media only screen and (max-width:400px) {
+
+                #scroll-left, #scroll-right{
+                transition: all .5s ease-in;
+
+                aspect-ratio: 1;
+                background-color: white !important;
+                border: 1px solid #FF8B4C;
+                color: #FF8B4C !important;
+                border-radius: 50% !important;
+                font-size: 10px !important;
+                font-weight: bold;
+                display: none;
+            }
+            .filter-button{
+                font-size: 12px !important;
+            }
+
+            .pills-container{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: start;
+                flex-wrap: nowrap;
+                overflow-x: scroll;
+                gap:5px;
+                height: 100%;
+                width: 100%;
+                max-height: 100px;
+                padding: 10px;
+                margin: 0 5px;
+                /* padding-left: 50px; */
+            }
+
+
+
+        }
+
+
+</style>
+
+
+<!-- 
+    **********************************************
+    HTML
+    **********************************************
+ -->
+
+
+
+        <div class="testimonial-main-container" id="vft-testimonial-main-container">
+            <div class="filter-container d-flex" id="vft-filter-container"><!-- whole container button -->
+                <div class="filter-left-col">
+                    <!-- scroll left button -->
+                    <button id="scroll-left"> <i class="bi bi-chevron-left fw-bold"></i></button>
+                </div>
+                <div class="pills-container mx-auto"></div>
+                <div class="filter-right-col">
+                <!-- scroll right button -->
+                <button id="scroll-right"> <i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            
+            <div class="testimonial-container mx-auto">
+                
+                <h4 id="selected-category" class="fw-bold p-0 m-0">
+                </h4>
+                <div class="testimonial-row mx-auto">
+                    
+                </div>
+            
+            </div>
+
+        </div>
+
+
+<!-- 
+    ***********************************************
+    END HTML
+    ***********************************************
+ -->
+
+    <script>
+
+        function createIframe(div) {
+          var iframe = document.createElement("iframe");
+          iframe.setAttribute(
+            "src",
+            "https://www.youtube.com/embed/" + div.dataset.id + "?autoplay=1&rel=0"
+          );
+          iframe.setAttribute("frameborder", "0");
+          iframe.setAttribute("allowfullscreen", "1");
+          iframe.setAttribute(
+            "allow",
+            "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          );
+
+        div.parentNode.replaceChild(iframe, div);
+        }
+        
+
+        function initYouTubeVideos() {
+            var playerElements = document.getElementsByClassName("youtube-player");
+
+
+            for (var n = 0; n < playerElements.length; n++) {
+                var videoId = playerElements[n].dataset.id;
+                var div = document.createElement("div");
+                div.setAttribute("data-id", videoId);
+                var thumbNode = document.createElement("img");
+                thumbNode.src = "https://i.ytimg.com/vi/ID/hqdefault.jpg".replace(
+                "ID",
+                videoId
+                );
+                div.appendChild(thumbNode);
+                var playButton = document.createElement("div");
+                playButton.setAttribute("class", "play");
+                div.appendChild(playButton);
+                div.onclick = function () {
+                    createIframe(this);
+                };
+
+                div.addEventListener("load",function(){
+                    alert("Video Loaded");
+                })
+
+                playerElements[n].appendChild(div);
+
+            }
+            }
+
+            document.addEventListener("DOMContentLoaded", initYouTubeVideos);
+
+
+    </script>
+
+
+    <script>
+
+    var vftTestimonials = [
+                {
+                    company:'TDC Automobile Sdn Bhd (Terrance)',
+                    video:'https://youtu.be/Ajh3Xupoy60',
+                    industry: 'Automotive'
+                },
+                {
+                    company:'King Hup Motors Sdn Bhd (Woo Yet Fei)',
+                    video:'https://youtu.be/J_0TKdw4tqo',
+                    industry: 'Automotive'
+                },
+                {
+                    company:'Marvel Capital (Elena Tan)',
+                    video:'https://youtu.be/z2cTsdqDk7A',
+                    industry: 'Business'
+                },
+                {
+                    company:'PURRFACT SDN BHD (Jayden Lee)',
+                    video:'https://youtu.be/EE2de9nsc9U',
+                    industry: 'Business'
+                },
+                // {
+                //     company:' iPainter Sdn Bhd 2 (Angela)',
+                //     video:'https://drive.google.com/file/d/1nMaLLeyw3-UEeAz2I1kFsIZkHd6m8EeW/view?usp=sharing',
+                //     industry: 'Construction'
+                // },
+                {
+                    company:'Miniis Kids Enterprise (Chew Chin Chai & Khor Chea Yee)',
+                    video:'https://youtu.be/FOB_2aE9bx0',
+                    industry: 'Event & Entertainment'
+                },
+                {
+                    company:'MMG 98 Enterprise 1  (Anderson Wong)',
+                    video:'https://youtu.be/MzhKkKGLQZA',
+                    industry: 'Event & Entertainment'
+                },
+                {
+                    company:'MMG 98 Enterprise  (Anderson Wong)',
+                    video:'https://youtu.be/ZQy3QFOeNqc',
+                    industry: 'Event & Entertainment'
+                },
+                {
+                    company:'Fajar Export Industry Sdn Bhd (Max & Shirley)',
+                    video:'https://youtu.be/lxyCQI8qMxc',
+                    industry: 'Food & Beverage'
+                },
+                {
+                    company:'Naturalinks Marketing Sdn Bhd (Chong Pei Tze)',
+                    video:'https://youtu.be/xwp3IYn437w',
+                    industry: 'Grocery'
+                },
+                {
+                    company:'Chin Loong Lighting Electrical Sdn Bhd',
+                    video:'https://youtu.be/87hrsXTlnQQ',
+                    industry: 'Home & Living'
+                },
+                {
+                    company:'K S TRADING CO (Liaw  Chai Lee)',
+                    video:'https://youtu.be/F21P2pNo_Mo',
+                    industry: 'Home & Living'
+                },
+                {
+                    company:'Syarikat Winho Furniture (Anson Ho)',
+                    video:'https://youtu.be/ai6cQRcVDhE',
+                    industry: 'Home & Living'
+                },
+                {
+                    company:'Chin Loong Lighting  Electrical Sdn Bhd (Chin Chee Fong)',
+                    video:'https://youtu.be/JCCyIdhd8f0',
+                    industry: 'Home & Living'
+                },
+                {
+                    company:'WL DREAM ART DESIGN CONSULTANCY (Tan Wei Liang)',
+                    video:'https://youtu.be/ei4VRQJaS0M',
+                    industry: 'Interior Design'
+                },
+                {
+                    company:'AEC Machinery (Shawn Lai)',
+                    video:'https://youtu.be/jZB9q6Bzsgc',
+                    industry: 'Mechanical & Engineering'
+                },
+                {
+                    company:'Akasia Commercial Products Sdn Bhd (Wendy Leong)',
+                    video:'https://youtu.be/JYYBHw7NcfI',
+                    industry: 'Cleaning'
+                },
+                {
+                    company:'Documac Sdn Bhd (Wesley Khoo)',
+                    video:'https://youtu.be/JHBHUac8my0',
+                    industry: 'Printing & Signage'
+                },
+                {
+                    company:'Eprop Group (Kenneth Liew & John Loh)',
+                    video:'https://youtu.be/Uka6okAwMck',
+                    industry: 'Property'
+                },
+                {
+                    company:'TA Power Group Sdn Bhd (Shermay Tan & James Wong)',
+                    video:'https://youtu.be/aVhGIzh-9Cg',
+                    industry: 'Tech & Telco'
+                },
+                {
+                    company:'Exclusive Telecommunication Sdn Bhd (May Enge)',
+                    video:'https://youtu.be/t1nZ6PZVIf4',
+                    industry: 'Tech & Telco'
+                },
+                {
+                    company:'GL BOSUN DIAMOND TOOLS SDN BHD (Lim Hong Seng)',
+                    video:'https://youtu.be/Sn9bDJwvXi4',
+                    industry: 'Trading & Supply'
+                },
+                {
+                    company:'Tacoplast Industries Sdn Bhd (Tony See & Daniel See)',
+                    video:'https://youtu.be/PL6cB-cAt_M',
+                    industry: 'Trading & Supply'
+                },
+                {
+                    company:'Chilly Rabbit Food Industries Sdn Bhd (TAN SAO CHIN)',
+                    video:'https://youtu.be/-e8lCyj9UFg',
+                    industry: 'Trading & Supply'
+                },
+                {
+                    company:'Chong Huat Electrical Sdn Bhd (Ken Hee)',
+                    video:'https://youtu.be/qos_rHBH6pc',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'PURFACT Sdn Bhd (Jessline Ooi)',
+                    video:'https://youtu.be/X8VHal3I_JE',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'Vinsoon Group Sdn Bhd (Jack Lim)',
+                    video:'https://youtu.be/Vp7j4lFfqYA',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'Naturalinks Marketing Sdn Bhd (Adrian & Cecelia)',
+                    video:'https://youtu.be/Nhg5uuv3W5I',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'Success Power Auto Parts (Teong Sitt Bay)',
+                    video:'https://youtu.be/8IYpZVtds2M',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'Naturalinks Marketing Sdn Bhd (Adrian Lee)',
+                    video:'https://youtu.be/KNrAPqBz_xk',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'Vinsoon Group (Dato’Michael Lim)',
+                    video:'https://youtu.be/POc_gZTuQ30',
+                    industry: 'Wholesale & Retail'
+                },
+                {
+                    company:'Vinsoon Group (Chong Poh Ying)',
+                    video:'https://youtu.be/64kCBQ9CGns',
+                    industry: 'Wholesale & Retail'
+                },
+            ]
+
+
+            for(testimonial of vftTestimonials){
+                var videoCard = buildVideoCard(testimonial)
+                $('.testimonial-row').append(videoCard)
+            }
+            
+            //get unique industries from list 
+            let vftIndustries = new Set(vftTestimonials.map(a => a.industry))
+
+            buildfilterButton(vftIndustries)
+    
+            function buildfilterButton(industries){
+    
+                var showAllButton = `<li class="filter-button active" data-filter="Show All">Show All</li>`
+                $('.pills-container').append(showAllButton)
+    
+                for(industry of industries){
+                    var filterButton = `
+                    <li class="filter-button" data-filter="${industry}">${industry}</li>
+                    `
+                    $('.pills-container').append(filterButton)
+                }
+    
+            }
+            
+
+            function buildVideoCard(testimonial){
+                /*
+                    video col
+                        video card
+                            video container
+                                youtube-player
+                            video details container
+                                title
+                                industry
+                
+                */
+
+                var videoCard = 
+                `
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 h-100 video-col" data-item='${testimonial.industry}'>
+                    <div class="video-card h-100">
+                        <div class="video-container">
+                            <div class="youtube-player" data-id="${getVideoID(testimonial.video)}"></div>
+                        </div>
+                        <div class="video-details-container">
+                            <p class="m-0 p-0 testimonial-video-industry">${testimonial.industry}</p>
+                            <h6 class="m-0 p-0 testimonial-video-title">${testimonial.company}</h6>
+                        </div>
+                    </div>
+                </div>
+                `
+                return videoCard
+                
+            }
+
+            function getVideoID(url){
+                var videoID = url.split(/\//).pop()
+                return videoID
+            }
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+//filter function
+let filterList = document.querySelectorAll('.filter-button')
+let videoCardList = document.querySelectorAll('.video-col')
+console.log(filterList)
+
+for(let i=0; i<filterList.length; i++){
+    filterList[i].addEventListener("click",function(){
+        /************** SET FILTER BUTTON ACTIVE **************/
+        //when clicked
+        //remove all active
+        
+        for(let j=0; j<filterList.length; j++){
+            filterList[j].classList.remove('active')
+        }
+        //set current to active
+        this.classList.add('active')
+        
+        let dataFilter = this.getAttribute('data-filter') //get the clicked data attrbute
+        document.getElementById('selected-category').innerText = dataFilter //set selected category as title
+
+        /************** SET Video Card BUTTON ACTIVE **************/
+
+        for(let k=0; k<videoCardList.length; k++){
+
+            videoCardList[k].classList.remove('active')
+            videoCardList[k].classList.add('hide')
+            
+            
+            if(videoCardList[k].getAttribute('data-item') == dataFilter || dataFilter == 'Show All' ){
+                videoCardList[k].classList.remove('hide')
+                videoCardList[k].classList.add('active')
+             
+            }
+        }
+    
+    })
+}
+
+
+        const buttonRight = document.getElementById('scroll-right');
+        const buttonLeft = document.getElementById('scroll-left');
+
+        buttonRight.onclick = function () {
+            document.querySelector('.pills-container').scrollLeft += $( window ).width()/1.5;
+        // alert('right')
+        };
+        buttonLeft.onclick = function () {
+            document.querySelector('.pills-container').scrollLeft -= $( window ).width()/1.5;
+        };
+
+
+
+    </script>
+    
+</body>
+</html>

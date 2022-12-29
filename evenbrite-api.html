@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventbrite API</title>
+</head>
+<body>
+
+
+    <h1>Eventbrite API</h1>
+    <h3>Event1 DATA</h3>
+    <p id="event1-data"></p>
+    
+    <h3>Event2 DATA</h3>
+    <p id="event2-data"></p>
+
+
+    <script>
+        const privateToken = 'BBAVLXI54YQ2OXB4DZFC'
+        const eventID1 = '328625466617' //VFT
+        const eventID2 = '320422471237' //VMG
+        
+        fetchAPI(eventID1).then(data => {
+            var sold = data.quantity_sold
+            var total = data.quantity_total
+            document.querySelector('#event1-data').innerHTML = sold +'/' + total
+
+            displayChart(sold,total)
+        });
+        
+        fetchAPI(eventID2).then(data => {
+            var sold = data.quantity_sold
+            var total = data.quantity_total
+            document.querySelector('#event2-data').innerHTML = sold + '/' + total
+
+        });
+        
+        async function fetchAPI(eventID) {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer BBAVLXI54YQ2OXB4DZFC");//might change the private token here
+            
+            // myHeaders.append("Cookie", "AS=abf624ac-d246-47e1-982a-f0d366fb7f4d; G=v%3D2%26i%3D3083faed-0ee5-41c9-b186-a3d47265a0c1%26a%3D1022%26s%3D3aef61db15ceb6fa5a49cbd56de00ef21abfb90e; SP=AGQgbbl8xCC45zjOFU9239WyzxAviqrVEw26X4CA9907FH8kR8hcXkMreeZbHBw4c1ldrFaVi10RJg4FudEKEA_rtSSa-ES7qbOfhCLnGpJ5GCd7Pt1Ou_Goo1lu9U0r5dItujzdwHRNi_5L9kvYY3p8N9iZ8v3e4PKT7gLvocWxMoXNbIsjb4Wp3YtoY75AECg9SVLUp5EN36XX_e7WlCIz96QDzqGpPAZxHPTWGvNsvVt9_WhSoqU; SS=AE3DLHTzV9qSJqhD4C0kgzB9HSQ_U3afZw; eblang=lo%3Den_US%26la%3Den-us; mgref=typeins; mgrefby=");
+
+            var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+            };
+
+            // const response = await fetch(`https://www.eventbriteapi.com/v3/events/328625466617/capacity_tier/`, requestOptions)
+            const response = await fetch(`https://www.eventbriteapi.com/v3/events/${eventID}/capacity_tier/`, requestOptions)
+            // const response = await fetch(URL, requestOptions)
+            const result = await response.json();
+            return result;
+        }
+        
+    
+
+    </script>
+</body>
+</html>

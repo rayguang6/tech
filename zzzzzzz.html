@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vimiTOS</title>
+  <!-- *******************************
+    Version 2 VIMITOS
+    Show company, then popup to show details
+  ************************************
+  -->
+</head>
+<body>
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> -->
+    <!-- JQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+
+    *, html, body{
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .header_section{
+      padding: 32px 8px;
+      width: 75vw;
+      margin: auto;
+    }
+
+    .header_title{
+      color: #ff8b47;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .back_button{
+      text-align: left;
+      color: #28221f;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid #28221f;
+      text-decoration: none;
+      font-size: 14px;
+
+    }
+
+    .back_button span{
+      /* font-size: 24px; */
+      /* font-weight: bold; */
+
+    }
+
+    .search_container{
+      margin: auto;
+      width: 75vw;
+      border: 1px solid #ff8b47;
+      padding: 8px;
+      border-radius: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /*search icon*/
+    .search_container .search_icon{
+      
+      font-size: 24px;
+      font-weight: normal;
+      color: #ff8b47;
+      padding: 0px 8px;
+      aspect-ratio: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mysearchbar{
+      font-size: 20px;
+      margin: auto;
+      width: 100%;
+      padding: 0px 8px;
+      outline:none;
+      border: none;
+
+    }
+
+    .mysearchbar:focus{
+      outline:none;
+    }
+
+    .my_table_container{
+      
+      /* overflow-x: scroll; */
+      width: 90%;
+      margin: 30px auto;
+    }
+
+    .label_container .label{
+      width: 100%;
+      border-radius: 8px;
+      font-size: 10px;
+      /* border: 1px solid #28221f; */
+      box-shadow: 0 20px 34px 0 rgb(152 163 207 / 30%);
+      padding: 8px 16px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    @media only screen and (max-width: 600px) {
+
+      .my_table_container{
+        overflow-x: scroll;
+      }
+
+      .mysearchbar{
+        font-size: 16px;
+        margin: auto;
+        width: 100%;
+      }
+
+      .my_table_container{
+        width: 100%;
+        margin: 30px auto;
+      }
+
+      .label_container{
+        flex-wrap: wrap;
+        margin:auto;
+      }
+
+      
+    }
+    
+    .label_container{
+      font-size: 12px;
+      display: flex;
+      gap: 4px;
+      width: 80vw;
+      margin: 8px auto;
+      
+    }
+    
+    
+   
+
+    .label_container .label div{
+      /* margin-top: 8px; */
+      color: #868079;
+    }
+
+    /*Badge*/
+    .mybadge{
+      padding: 4px 8px;
+      white-space: nowrap;
+      vertical-align: middle;
+      border-radius: 99999px;
+      color:white;
+      /* font-weight: bold; */
+      font-size: 12px;
+    }
+
+    .mybadge.bg-primary{
+      background-color: #007BFF;
+    }
+    .mybadge.bg-danger{
+      background-color: #ef1c1c;
+    }
+    .mybadge.bg-success{
+      background-color: #64DD17;
+    }
+
+    .modal_title{
+      text-align: center;
+    }
+
+    .my_flex{
+      display: flex;
+      align-items: center;
+      /* justify-content: center; */
+      padding: 8px;
+    }
+
+/********************
+Result  Table START
+********************/
+
+.vimitos_table{
+  border: 1px solid #ff8b47;
+  padding: 0;
+  margin: 0;
+
+  /* overflow: hidden; */
+
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 20px 34px 0 rgb(152 163 207 / 30%);
+  width: 100%;
+}
+
+.vimitos_table thead{
+  width: 100%;
+  background-color: #ff8b47;
+  border-radius: 8px 8px 0 0 ;
+  /* overflow: hidden; */
+  padding: 0;
+  margin: 0;
+}
+
+.vimitos_table thead tr{
+  background-color: #ff8b47;
+  border-radius: 8px 8px 0 0 ;
+  overflow: hidden;
+}
+
+.vimitos_table thead tr th{
+  color: white;
+  padding: 16px 16px;
+  text-align: left;
+
+}
+
+.vimitos_table tbody tr{
+  margin-top: 4px !important;
+  cursor: pointer;
+  padding: 8px 4px;
+  /* background-color: red; */
+  border: 1px solid #ff8b4710;
+}
+
+.vimitos_table tbody tr:hover{
+  background-color: #ff8b4730;
+}
+
+.vimitos_table tbody tr td{
+  margin-top: 50px !important;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+/********************
+Result Table END
+********************/
+
+
+/********************
+Modal Start
+********************/
+.my_modal_container{
+      opacity: 0;
+      visibility: hidden;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: left;
+      background: rgba(0,0,0, .8);
+      transition: opacity .25s ease;
+    }
+
+    .my_modal_bg{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      /* cursor: pointer; */
+    }
+
+    .modal_state {
+      display: none;
+    }
+
+    .my_modal_body{
+      transition: top .25s ease;
+      position: absolute;
+      top: -10%;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      margin: auto;
+      
+      overflow: auto;
+      background: #fff;
+      border-radius: 5px;
+      padding: 1em 2em;
+      height: 75%;
+      z-index: 3;
+    }
+
+    @media screen and (max-width: 768px) {
+      .my_modal_body {
+        width: 90%;
+        height: 90%;
+        box-sizing: border-box;
+        top:5%;
+      }
+    }
+
+    .my_modal_close {
+      position: absolute;
+      right: 1em;
+      top: 1em;
+      width: 1.1em;
+      height: 1.1em;
+      cursor: pointer;
+    }
+
+    .my_modal_close:after,
+.my_modal_close:before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 1.5em;
+  background: #ccc;
+  display: block;
+  transform: rotate(45deg);
+  left: 50%;
+  margin: -3px 0 0 -1px;
+  top: 0;
+}
+
+.my_modal_close:before {
+  transform: rotate(-45deg);
+}
+
+.showModal{
+  opacity: 1;
+  visibility: visible;
+
+}
+
+.hideModal{
+  opacity: 0;
+  visibility: hidden;
+
+}
+
+.show{
+  display: block;
+}
+
+.hide{
+  display: none;
+}
+
+/********************
+Modal END
+********************/
+
+.prompt_search_container{
+  width: 90%;
+  margin: auto;
+}
+
+.prompt_search_container h2{
+  text-align: center;
+}
+
+
+
+
+    </style>  
+
+  <script>
+    $(document).ready(function(){
+      $("#my_search_input").on("keyup", function() {
+        
+        var value = $(this).val().toLowerCase().trim();
+        if(value == ""){
+          //if no value detected, hide the table
+          $("#mytable").addClass("hide")
+
+          $(".label_container").addClass("hide")
+
+          $(".prompt_search_container").removeClass("hide")
+        }else{
+          
+          $("#mybody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+
+          $("#mytable").removeClass("hide")
+
+          $(".label_container").removeClass("hide")
+
+          $(".prompt_search_container").addClass("hide")
+        }
+      })
+    })
+
+
+ </script>
+
+<div class="header_section">
+  <a class="back_button" href="https://top1.com.my/sales"><span> &#8249 </span> Back to sales portal</a>
+  <h1 class="header_title">vimiTOS</h1>
+
+</div>
+  <div class="search_container">
+    <span class="search_icon">⌕
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="search_icon bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+      </svg> -->
+
+    </span>
+    <input type="text" id="my_search_input" class="mysearchbar" placeholder="search for company name...">
+  </div>
+
+<!-- ------------------------------------------------------------------------------------ -->
+  <div class="prompt_search_container">
+    <h2>Enter company name to check Protection Status</h2>
+  </div>
+
+  <div class="label_container hide">
+    <div class="label">
+      <div class="label_badge_div">
+        <span class="mybadge bg-primary">Contact Admin</span>
+      </div>
+      <div>Information incomplete. Contact Admin or Deal Owner to know more.</div>
+    </div>
+    <div class="label">
+      <div class="label_badge_div"> 
+
+        <span class="mybadge bg-danger">Protected</span>
+      </div>
+      <div>Still within Protection Period.</div>
+    </div>
+    <div class="label">
+      <div class="label_badge_div">  
+        <span class="mybadge bg-success">Open Deal</span>
+      </div>
+      <div>Protection Period Expired. Anyone can contact.</div>
+    </div>
+  </div>
+
+
+
+
+  <div class="my_table_container">
+
+    <table id="mytable" BORDER=0 CELLSPACING=0 class="vimitos_table hide">
+      <thead id="myhead">
+        <tr>
+          <th>Company</th>
+          <th>Company Owner</th>
+          <th>Status</th>
+          <th>Latest Deal Owner</th>
+          <th>Expiry Date</th>
+        </tr>
+      </thead>
+      <tbody id="mybody">
+
+      </tbody>
+
+    </table>
+  </div> 
+
+
+
+
+
+
+
+    <!-- Modal Start -->
+    <div class="my_modal_container">
+      <div class="my_modal_bg">
+  
+        <div class="my_modal_body">
+          <span class="my_modal_close" onclick="closeModal()"></span>
+  
+          <div class="my_modal_content">
+  
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+    <!-- Modal End -->
+
+
+
+
+  <script>
+    //*** Declare Variables
+    const baseURL = `https://docs.google.com/spreadsheets/d/`
+    const ssid = `1qKX3OSh8_B3b7aYm4-raqkiMCGq85bPjHJRp0cSKRvA`
+    const q1 = `/gviz/tq?`
+    const q2 = 'tqx=out:json'
+    const sheetName = `Deal_With_Associated_Contacts` //this is the GSheet Tab Name
+    const q3 = `sheet=${sheetName}`
+    const finalURL = `${baseURL}${ssid}${q1}&${q2}&${q3}` //final google sheet link to fetch
+    //***********
+    //Declare End
+    //***********
+
+    // list of companies retrieved via Google Sheet from Hubspot
+    var companies = []
+
+    // call the fetch when windows load
+    window.onload = fetchSheet(finalURL)
+
+    // Read Data From Google Sheet
+    async function fetchSheet(URL){
+
+      const response = await fetch(URL)
+      const data = await response.text()
+      const tempData = data.substr(47).slice(0, -2); //removed the additional text from google
+      const json = JSON.parse(tempData)
+      const rows = json.table.rows
+
+      console.log(rows)
+
+      rows.forEach((row)=>{
+        const rowData = row.c
+
+        // Columns in Google Sheet
+        // 0 Record ID, 1	Deal Name, 2	Associated Company,	3 Product Purchased,	4 Deal Owner ID,	5 Deal Owner Name,	6 Deal Owner Team,	7 Closed Date,	8 Deal Stage
+        var recordID = getCellValue(rowData[0])
+        var dealName = getCellValue(rowData[1])
+        var companyName = getCellValue(rowData[2])
+        var contactName = getCellValue(rowData[3])
+        var product = getCellValue(rowData[4])
+        var ownerID = getCellValue(rowData[5])
+        var ownerName = getCellValue(rowData[6])
+        var ownerTeam = getCellValue(rowData[7])
+        // var closedDate = convertToDate(getCellValue(rowData[8]))
+        var closedDate = convertToDate(getFCellValue(rowData[8]))
+        var dealStage = getCellValue(rowData[9])
+
+        var status = "" // need to calculate from latest deals
+        var latestDealOwner =  "" //need to calculate from latest deals // ## find a better way
+
+        var companyObject = {
+          companyName : companyName,
+          contactName: contactName,
+          latestDealOwner: "", //to be calculated
+          expired : "", //to be calculated
+          status:"", //to be calculated
+          deals:[]
+        }
+
+        var dealObject = {
+          dealName : dealName,
+          product: product,
+          ownerName: ownerName,
+          ownerTeam: ownerTeam,
+          closedDate: closedDate,
+          dealStage: dealStage
+        }
+
+        insertObject(companyObject, dealObject)
+      }) // end of foreach loop
+
+      console.log(companies); //final nested companies list
+      
+      buildTable()
+    }
+
+    // function to check null and return the values
+    function getCellValue(cell){
+      if(cell){
+        return cell.v
+      }
+      else{
+        return ""
+      }
+    }
+
+    function getFCellValue(cell){
+      if(cell){
+        return cell.f
+      }
+      else{
+        return ""
+      }
+    }
+
+
+    // function to check if object exist inside the array
+    function insertObject(companyObject, dealObject){
+
+      // Deal Sequence
+
+      // check from 'companies' array, whether this company name is exist
+      var result = $.grep(companies, function(e){ return e.companyName == companyObject.companyName})
+
+      var closedDate = dealObject.closedDate //每一个deal的close date ( ""     OR   16 Jun, 2022)
+      var expiredDate
+
+      //get expired date based on the closed date
+      // 才可以决定要不要从把deals details UPDATE 去company deals
+      if(closedDate ===""){
+        expiredDate = ""
+      }else{
+        //will return a date, whether +60days or +365days
+        expiredDate = getExpiredDate(closedDate, dealObject.product, dealObject.ownerTeam)
+        
+        
+
+      }
+
+      //====================================
+
+      if (result.length === 0) {
+      // 代表没有这个公司在companies list， 所以可以直接把details 丢进去
+      // NO PREVIOUS RESULT FOUND -> Create New Company Object
+
+        //set the expiry date for newly create date
+        companyObject.expired = expiredDate
+        //set owner
+        companyObject.latestDealOwner = dealObject.ownerName
+        //set status
+        companyObject.status = getStatus(expiredDate, companyObject.latestDealOwner, dealObject.product)
+
+        companyObject.deals.push(dealObject)
+        if(companyObject.companyName!=""){
+          companies.push(companyObject)
+        }
+      }
+      else if (result.length === 1) {
+        // property found, access the foo property using result[0].foo
+        //push deals into this object
+        result[0].deals.push(dealObject)
+
+
+        /************
+        //if new deal's expired date is more latest,  or the current object expired date is empty
+         * ************/
+         
+        //current expired from the company array
+        var existingExpired = (result[0].expired) //有可能是''
+
+        if(result[0].latestDealOwner == "" && (existingExpired =="" || existingExpired=="Invalid Date")){
+          // 当目前的owner和expired都是空的    就直接replace
+
+          result[0].expired = expiredDate
+          result[0].latestDealOwner = dealObject.ownerName
+          result[0].status = getStatus(expiredDate, dealObject.ownerName, dealObject.product)
+
+        }else{
+
+          if(expiredDate=="" || expiredDate =="Invalid Date"){
+            //if expired date is null, do nothing
+
+          // }else if( (moment(expiredDate).isAfter(existingExpired)) ){
+          }else if( (new Date(expiredDate) > new Date(existingExpired)) ){
+            //REPLACE
+
+            result[0].expired = expiredDate
+            result[0].latestDealOwner = dealObject.ownerName
+            result[0].status = getStatus(expiredDate, dealObject.ownerName, dealObject.product)
+            
+          }
+
+        }
+        
+      }
+
+    }
+
+
+    // function to loop companies list and build table
+    function buildTable(){
+      // var index = 0
+      for(company of companies){
+        // index++
+
+        // var escapedString = company.companyName.replace(/'/g, "\\'");
+
+        // if(company.companyName.indexOf("'")>0){
+        //   console.log("company: " + company.companyName);
+        //   console.log("escaped: "+escapedString);
+        // }
+        
+
+        // TODO: modify companyName with single or double quotes
+
+        // var companyName = removeApostrophe(company.companyName)
+        var companyName = escape(company.companyName)
+        
+
+        var row = 
+
+        `
+        <tr onclick='getDeals("${companyName}")'>
+          <td>${company.companyName}</td>
+          <td>${company.contactName}</td>
+          <td>${getBadge(company.status)}</td>
+          <td>${company.latestDealOwner}</td>
+          <td>${company.expired}</td>
+
+        </tr>
+        `
+
+        $('#mybody').append(row)
+        // console.log("loop my table: " + new Date().toTimeString());
+      }
+      // buildDataTable()
+      // console.log("finish building table: " + new Date().toTimeString());
+    }
+
+    // convert the date from google sheet into JS date
+    //Hubspot Date Format: 29/05/2022
+    function convertToDate(string){
+      if(string){
+        var s = string.split("/")
+        var date =  new Date(s[1]+"/"+s[0]+"/"+s[2]).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+        return date
+      }else{
+        return string
+      }
+    }
+
+    function getBadge(status) {
+        switch(status){
+            case "Protected":
+              return `<span class="mybadge bg-danger">${status}</span>`
+            case "Open Deal":
+                return `<span class="mybadge bg-success">${status}</span>`
+
+            default:
+                return `<span class="mybadge bg-primary">${status}</span>`
+        }
+    }
+
+    // check products and team(later check partner) to decide how many days to add
+    function getExpiredDate(closedDate, product, ownerTeam){
+      // if(closedDate==""||closedDate=="Invalid Date"){return ""}
+
+      //array of products that will not add protection period
+      const nonProduct = ['Vimigo Preview', '[Book] 分钱为王', '[Squad] Automotive Summit'];
+
+      //product not inside array, then add protection period
+      if (nonProduct.indexOf(product) === -1){
+
+        //TODO: check team, partner +365, squad +60
+        // return moment(closedDate).add(365, 'days').format('DD MMM, YYYY')
+        var closeDate = new Date(closedDate)
+        closeDate.setDate(closeDate.getDate() + 365)
+        return closeDate.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+
+      }else{
+        // return moment(closedDate).format('DD MMM, YYYY')
+        return closedDate
+      }
+      
+
+    }
+
+    //function check status
+    function getStatus(expiredDate, ownerName, product=""){
+      // var today = moment().format('DD MMM, YYYY')
+      var today = new Date()
+      var expiry = new Date(expiredDate)
+
+
+      // if either one of owner name or expire date is empty, make it CONTACT ADMIN
+      if(ownerName === "" || expiredDate === ""){
+        if(product==="Vimigo Preview"){
+          return "Open Deal"
+        }else{
+          return "Contact Admin"
+        }
+      }
+      else if(((expiry) < (today))){
+        return "Open Deal"
+      }else{
+        return "Protected"
+      }
+
+    }
+
+
+
+    function myBubbleSort(arr){
+  
+    for(var i = 0; i < arr.length; i++){
+      
+        // Last i elements are already in place 
+        for(var j = 0; j < ( arr.length - i - 1 ); j++){
+          
+          // Checking if the item at present iteration
+          // is greater than the next iteration
+
+          // if( arr[j].closedDate == "" || moment(arr[j].closedDate).isBefore(arr[j+1].closedDate)
+          if( arr[j].closedDate == "" || new Date(arr[j].closedDate) < new Date(arr[j+1].closedDate))
+          {
+            // If the condition is true then swap them
+            var temp = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j+1] = temp
+          }
+        }
+      }
+      return arr
+    }
+
+    function getDeals(companyName){
+      companyName = unescape(companyName)
+
+      console.log("passed parameter: "+ companyName)
+
+      $('.my_modal_content').empty()
+
+      for(company of companies){
+        if(company.companyName == companyName){
+
+          dealsArray = company.deals
+          console.log(dealsArray);
+          
+          //sort array
+          var sortedArray = myBubbleSort(dealsArray)
+
+          var companyDetails = 
+          `
+          <h2 class="modal_title">${company.companyName}</h2>
+          <div class="my_flex"> Company Owner: &nbsp; <strong>${company.contactName}</strong></div>
+          <div class="my_flex"> Latest Deal Owner: &nbsp; <strong>${company.latestDealOwner}</strong></div>
+          <div class="my_flex"> Expired Date : &nbsp;<strong>${company.expired}</strong></div>
+          <div class="my_flex"> Protection Status:&nbsp;${getBadge(company.status)} </div>
+       
+          `
+          $('.my_modal_content').append(companyDetails)
+
+
+          var dealTable = `
+          <table BORDER=0 CELLSPACING=0 class="vimitos_table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Deal Owner</th>
+                <th>Closed Date</th>
+              </tr>
+            </thead>
+            <tbody>
+          `
+
+          for(deal of sortedArray){
+            var dealRow = `
+            <tr>
+              <td>${deal.product}</td>
+              <td>${deal.ownerName}</td>
+              <td>${deal.closedDate}</td>
+            </tr>`
+
+            dealTable += dealRow
+          }
+
+          dealTable += `</tbody></table>`
+          
+          $('.my_modal_content').append(dealTable)
+        }
+
+      }
+
+      openModal()
+    }
+
+
+    // MODAL
+    function closeModal(){
+      $('.my_modal_container').removeClass("showModal")
+      $('.my_modal_container').addClass("hideModal")
+    }
+    function openModal(){
+      $('.my_modal_container').removeClass("hideModal")
+      $('.my_modal_container').addClass("showModal")
+    }
+
+    $(document).click(function(click){
+      var target = $(click.target);
+
+      if(!target.hasClass("my_modal_body") && target.hasClass("my_modal_bg")){
+        closeModal();
+      }
+    });
+
+  </script>
+
+
+
+
+</body>
+</html>

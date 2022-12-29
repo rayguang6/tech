@@ -1,0 +1,330 @@
+<script>
+    /***************
+     * CREATE NUMBER PAD at the login page
+     * Need to change the pw-input id for every page
+     */
+  
+    var numberPad = `
+        <div class="numper-pad-container">
+  
+        <div class="num-row">
+            <div class="num-btn"><span>1</span></div>
+            <div class="num-btn"><span>2</span></div>
+            <div class="num-btn"><span>3</span></div>
+        </div>
+        <div class="num-row">
+            <div class="num-btn"><span>4</span></div>
+            <div class="num-btn"><span>5</span></div>
+            <div class="num-btn"><span>6</span></div>
+        </div>
+        <div class="num-row">
+            <div class="num-btn"><span>7</span></div>
+            <div class="num-btn"><span>8</span></div>
+            <div class="num-btn"><span>9</span></div>
+        </div>
+        <div class="num-row">
+        <div class="num-btn" id="erase-btn"><span>
+            <svg width="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                <path d="m18 9-6 6"></path>
+                <path d="m12 9 6 6"></path>
+              </svg>
+            </span>
+        </div>
+        <div class="num-btn"><span>0</span></div>
+        <div class="num-btn" id="enter-btn">
+            <span>
+            <svg width="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="m9 10-5 5 5 5"></path>
+                <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+              </svg>
+            </span>
+        </div>
+        </div>
+    </div>
+    `
+  
+    //turn css into js
+    var numberPadstyles = `
+  
+  .ppw-ppf-field-container{
+          display: flex;
+      justify-content: center;
+  }    
+  
+  .ppw-post-password-container{
+        padding: 50px 20px;
+      height: 100vh;
+      background-color: #000;
+  }
+  
+  .ppw-ppf-field-container .ppw-pwd-submit-btn{
+      background-color:#FF8B4C;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: inset 0 0 0.5em 0 #ff8b47, 0 0 0.5em 0 #ff8b47;
+  }
+  
+  .ppw-ppf-desc p{
+      color:white;
+  }
+  
+  .ppw-ppf-headline{
+      text-align:center;
+  }
+  
+  
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #28221f;
+        height: 100vh;
+        width: 100vw;
+    }
+  
+    .numper-pad-container{
+        margin:auto;
+        margin-top:30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+  
+  
+    
+  
+    .num-row{
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+  
+    .num-btn{
+        width: 12vh;
+        height: 12vh;
+        text-align: center;
+        border: 1px solid #ff8b47;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+        color: #ff8b47;
+        font-weight: bold ;
+        font-size:16px;
+        box-shadow: inset 0 0 0.5em 0 #ff8b47, 0 0 0.5em 0 #ff8b47;
+    }
+  
+    .num-btn:active{
+      background-color:#ff8b47;
+      color: #FFF !important;
+    }
+    
+    @media only screen and (min-width: 768px) {
+      .num-btn:hover{
+          background-color:#ff8b47;
+          color: #FFF !important;
+      }
+    }
+    `
+    
+    //insert html
+    var passwordContainer = document.querySelector('.tve-lp-pw-form')
+    passwordContainer.classList.add("passwordContainer")
+    passwordContainer.innerHTML += numberPad
+    
+    var passwordForm = document.querySelector(".post-password-form")
+    passwordForm.classList.add("passwordForm");
+
+    //Insert CSS into HTML head
+    var styleSheet = document.createElement("style")
+    styleSheet.innerText = numberPadstyles
+    document.head.appendChild(styleSheet)
+  
+    // assign password input
+    var myPasswordInput = document.querySelector(".post-password-form > p > label > input")
+    myPasswordInput.classList.add("myPasswordInput");
+    myPasswordInput.setAttribute("inputmode", "numeric")
+  
+    //assign password button
+    var passwordBtn = document.querySelector(".post-password-form > p > input")
+    passwordBtn.classList.add("class","passwordBtn");
+
+    // create image
+    let logoImage = document.createElement("img");
+    logoImage.setAttribute("src", "https://www.top1.com.my/wp-content/uploads/top1-logo-white.png")
+    logoImage.width="300"
+    passwordForm.prepend(logoImage)
+    
+    //add function to numberpad buttons
+    var btn = document.querySelectorAll('.num-btn')
+    btn.forEach(val=>{
+        val.addEventListener("click",()=>{
+            myPasswordInput.value += val.innerText
+        })
+    })
+  
+    var eraseBtn = document.querySelector('#erase-btn')
+    eraseBtn.addEventListener("click",()=>{
+        myPasswordInput.value = myPasswordInput.value.slice(0, -1);
+    })
+  
+    var enterBtn = document.querySelector('#enter-btn')
+    enterBtn.addEventListener("click",()=>{
+        passwordBtn.click();
+    })
+  
+    // Key Press
+    document.addEventListener("keypress", function(event) {
+  
+        var numberArray = ['1','2','3','4','5','6','7','8','9','0']
+  
+        // check if it is number only
+        
+        if(numberArray.includes(event.key)){
+            //and check whether the password-input is focused to prevent double insert
+            if(myPasswordInput != document.activeElement){
+                myPasswordInput.value+=event.key
+            }
+        }
+        
+    })
+  
+    //track the backspace key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Backspace") {
+            if(myPasswordInput != document.activeElement){
+                myPasswordInput.value = myPasswordInput.value.slice(0, -1);
+            }
+        }
+        if (event.keyCode === 13) {
+            passwordBtn.click();
+        }
+    });
+  
+  </script>
+
+  
+  
+  <!-- ChartJS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+      <script>
+          /*Get API From Eventbrite */
+          const privateToken = 'BBAVLXI54YQ2OXB4DZFC'
+  
+          async function fetchAPI(eventID) {
+              var myHeaders = new Headers();
+              myHeaders.append("Authorization", "Bearer BBAVLXI54YQ2OXB4DZFC");//might change the private token here
+              // myHeaders.append("Cookie", "AS=abf624ac-d246-47e1-982a-f0d366fb7f4d; G=v%3D2%26i%3D3083faed-0ee5-41c9-b186-a3d47265a0c1%26a%3D1022%26s%3D3aef61db15ceb6fa5a49cbd56de00ef21abfb90e; SP=AGQgbbl8xCC45zjOFU9239WyzxAviqrVEw26X4CA9907FH8kR8hcXkMreeZbHBw4c1ldrFaVi10RJg4FudEKEA_rtSSa-ES7qbOfhCLnGpJ5GCd7Pt1Ou_Goo1lu9U0r5dItujzdwHRNi_5L9kvYY3p8N9iZ8v3e4PKT7gLvocWxMoXNbIsjb4Wp3YtoY75AECg9SVLUp5EN36XX_e7WlCIz96QDzqGpPAZxHPTWGvNsvVt9_WhSoqU; SS=AE3DLHTzV9qSJqhD4C0kgzB9HSQ_U3afZw; eblang=lo%3Den_US%26la%3Den-us; mgref=typeins; mgrefby=");
+  
+              var requestOptions = {
+              method: 'GET',
+              headers: myHeaders,
+              redirect: 'follow'
+              };
+  
+              const response = await fetch(`https://www.eventbriteapi.com/v3/events/${eventID}/capacity_tier/`, requestOptions)
+              const result = await response.json();
+              return result;
+          }
+  
+          fetchAPI(eventID1).then(data => {
+              var sold = data.quantity_sold
+              var total = data.quantity_total
+  
+              drawChart(sold,total,'event1-chart')
+          });
+  
+          fetchAPI(eventID2).then(data => {
+              var sold = data.quantity_sold
+              var total = data.quantity_total
+  
+              drawChart(sold,total,'event2-chart')
+          });
+  
+      </script>
+  
+      <script>
+          // Draw Chart With ChartJS
+  
+          function drawChart(sold,total,chartID){
+  
+              // setup data block
+              const data = {
+                  labels: ['Registered', 'Empty Slots'],
+                  datasets: [{  
+                      data: [sold,total-sold],
+                      backgroundColor: [
+                      '#FF8b47',
+                      '#FFECE1'
+                      ],
+                      borderColor: [
+                      '#FF8b47',
+                      '#FFECE1'
+                      ],
+                      hoverOffset: 4,
+                      borderWidth:1,
+                      cutout:'80%',
+                      borderRadius:2,
+                  }]
+              };
+  
+              // counter plugin block
+              const stackedText = {
+                  id: 'stackedText',
+                  afterDatasetsDraw(chart,args,options){
+                      const{ctx,chartArea:{top,botton,left,right,width,height}} = chart;
+  
+                      ctx.save();
+                      const fontHeight = width/4;
+                      const smallFontHeight = fontHeight/2;
+  
+                      ctx.font = ` ${smallFontHeight}px FontAwesome`
+                      ctx.fillStyle =  '#FF8b47',
+                      ctx.textAlign = 'center';
+                      ctx.fillText('\uf0c0', width/2, height/2)
+  
+                      ctx.restore
+  
+                      ctx.font = `bolder ${smallFontHeight}px Arial`;
+                      ctx.fillStyle = '#28221f',
+                      ctx.textAlign = 'center';
+                      ctx.fillText(`${sold}/${total}`, width/2, height/2 + top + smallFontHeight);
+                  }
+              }
+  
+              // config block
+              const config = {
+                  type: 'doughnut',
+                  data: data,
+                  options: {
+                      radius: '90%',
+                      animation:{
+                          animateRotate : true
+                      },
+                      plugins:{
+                          legend:{
+                              display: false
+                          },
+                          tooltip:{
+                              enabled:true
+                          }
+                      }
+                  },
+                  plugins: [
+                      stackedText
+                  ]
+              };
+  
+              //   render init block
+              var ctx = document.getElementById(chartID)
+                  const myChart = new Chart(
+                  ctx,
+                  config
+              );
+  
+          }
+      </script>

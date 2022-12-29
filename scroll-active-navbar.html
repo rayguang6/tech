@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Navigation</title>
+</head>
+<body>
+
+    <style>
+        
+        body,html{
+            /* background-color: #202020;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0;
+            margin: 0; */
+            
+            scroll-behavior: smooth;
+
+        }
+        
+        .scroll-container{
+            /* padding: 0 15%; */
+            /* position: fixed; */
+            /* top:0; */
+            padding: 0 !important;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 32px;
+            background-color: #fff;
+        }
+
+        .scroll-container .scroll-link{
+            color: #868079;
+            font-size: 16px;
+            padding: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .scroll-container .scroll-link:hover{
+            color: #ff8b47;
+            font-weight: bold;
+            border-bottom: 4px solid #ff8b47;
+        }
+
+        .scroll-link-icon{
+            font-weight: bold;
+            /* font-size: 20px; */
+        }
+
+
+        /* Temp testing code for section */
+        .mysection{
+            margin-bottom: 50px;
+            min-height: 800px;
+            border: 5px solid #ff8b47;
+            /* color: white; */
+            margin-top: 100px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+        }
+
+        .body-container{
+            top: 200;
+            margin-top: 300px;
+        }
+
+        @media only screen and (max-width:400px) {
+
+            .scroll-container{
+                gap: 4px;
+            }
+
+            .scroll-container .scroll-link{
+                /* font-size: 14px; */
+                padding:8px 4px;
+            }   
+
+            .scroll-link-icon{
+                padding: 0;
+                font-weight: bold;
+                /* font-size: 14px; */
+            }
+        }
+
+
+
+    </style>
+
+    <div class="scroll-container">
+            <a href="#important-links" class="scroll-link"><span class="scroll-link-icon">&#8593;</span> 重要链接</a>
+            <a href="#newest-price" class="scroll-link">最新价格</a>
+            <a href="#vimigo-sales-kit" class="scroll-link">Vimigo</a>
+            <a href="#vft-sales-kit" class="scroll-link">分钱为王</a>
+            <a href="#founder-sales-kit" class="scroll-link">Founder</a>
+    </div>
+
+    <div class="body-container">
+        
+        <div id="sec1" class="mysection">
+            所有链接
+        </div>
+        <div id="sec2" class="mysection">
+            最新价格
+        </div>
+        <div id="sec3" class="mysection">
+            Vimigo
+        </div>
+        <div id="sec4" class="mysection">
+            分钱为王
+        </div>
+        <div id="sec5" class="mysection">
+            Founder
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function scroll(){
+            
+        }
+    </script>
+    
+
+</body>
+</html>

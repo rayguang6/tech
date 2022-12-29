@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body{
+            background-color: black;
+        }
+
+        .copy-button{
+            background-color:transparent;
+            border:none;
+            color:#FFF;
+            padding:0;
+            margin:0;
+        }
+        
+        .glass-button {
+         padding:5px;
+       display: inline-block;
+       border: 0;
+       text-decoration: none;
+         border-radius:3px;
+       background-color: rgba(255,255,255,0.1);
+       border: 1px solid rgba(255,255,255,0.1);
+       backdrop-filter: blur(30px);
+       color: rgba(255,255,255,0.8);
+       font-size: 14px;
+       cursor: pointer;
+     }
+    
+     .glass-button:hover {
+       background-color: rgba(255,255,255,0.2);
+     }
+        
+        #copy-bank-confirm-message{
+            color:white;
+        }
+    
+        
+    </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <button id="vft-pdf" class="copy-button glass-button" value="3220138106" onclick="copyText(this.id,this.value)"> <i class="fa fa-clone"></i></button>
+    
+    <span id="copy-bank-confirm-message">
+    </span>
+    
+    
+    <script>
+        function copyText(thisButtonId,text) {
+    
+            // Set all copybutton text back to 'Copy'
+            const nodeList = document.querySelectorAll(".copy-button");
+                for (i = 0; i < nodeList.length; i++) {
+    //             nodeList[i].innerHTML = "Copy <i class='fa fa-clone'></i>"
+            } 
+    
+        navigator.clipboard.writeText(text);
+        document.getElementById('copy-bank-confirm-message').innerHTML = "Copied!"
+        setTimeout(function () {document.getElementById('copy-bank-confirm-message').innerHTML = ""}, 2000);
+
+        }
+    
+    </script>
+</body>
+</html>

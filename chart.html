@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing ChartJS</title>
+    
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+      .event-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .chart-container{
+        width: 25%;
+        margin: auto;
+      }
+
+      .div{
+        width: 100%;
+      }
+
+    </style>
+
+    <div class="event-container">
+      <div class="div">
+        <div class="chart-container" >
+            <canvas id="event1-chart" class="chart" ></canvas>
+        </div>
+      </div>
+
+      <div class="div">
+
+        <div class="chart-container">
+          <!-- <canvas id="chart1" class="chart"></canvas> -->
+          <canvas id="event2-chart" class="chart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+<script>
+
+drawChart(68,500,'event1-chart')
+drawChart(7,200,'event2-chart')
+
+function drawChart(sold,total,chartID){
+  // setup  data block
+
+  const data = {
+      labels: ['Registered', 'Empty Slots'],
+      datasets: [{  
+        data: [sold,total-sold],
+        backgroundColor: [
+          '#E0AB48',
+          'rgba(224, 171, 72, 0.1)'
+        ],
+        borderColor: [
+          '#E0AB48',
+          'rgba(224, 171, 72, 0.1)'
+        ],
+        hoverOffset: 4,
+        borderWidth:2,
+        cutout:'80%',
+        borderRadius:3,
+      }]
+    };
+
+    // counter plugin block
+    const stackedText = {
+        id: 'stackedText',
+        afterDatasetsDraw(chart,args,options){
+            const{ctx,chartArea:{top,botton,left,right,width,height}} = chart;
+
+            ctx.save();
+            const fontHeight = width/4;
+            const smallFontHeight = fontHeight/2;
+
+            
+            ctx.font = ` ${smallFontHeight}px FontAwesome`
+            ctx.fillStyle =  '#E0AB48',
+            ctx.textAlign = 'center';
+            ctx.fillText('\uf0c0', width/2, height/2)
+
+            ctx.restore
+
+            ctx.font = `bolder ${smallFontHeight}px Arial`;
+            ctx.fillStyle = '#141821',
+            ctx.textAlign = 'center';
+            ctx.fillText(`${sold}/${total}`, width/2, height/2 + top + smallFontHeight);
+
+            
+
+        
+        }
+    }
+
+  // config block
+
+    const config = {
+      type: 'doughnut',
+      data: data,
+      options: {
+          radius: '90%',
+          animation:{
+              animateRotate : true
+          },
+          plugins:{
+            legend:{
+              display: false
+            },
+            tooltip:{
+              enabled:true
+            }
+          }
+      },
+      plugins: [
+        stackedText
+      ]
+    };
+
+  //   render init block
+  var ctx = document.getElementById(chartID)
+    const myChart = new Chart(
+      ctx,
+      config
+    );
+
+}
+//////////////////////////////////////////////////////////////////////////
+// draw chart end
+/////////////////////////////////////////////////////////////////////////////
+
+</script>
+
+
+
+</body>
+</html>

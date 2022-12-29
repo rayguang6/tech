@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="tve-lp-pw-form">	
+        <div class="ppw-post-password-container">
+            <form action="?action=ppw_postpass&amp;type=individual&amp;callback_url=https%3A%2F%2Fwww.top1.com.my%2Fsales%2F" class="ppw-post-password-form post-password-form" method="post" data-hs-cf-bound="true">	<div class="ppw-ppf-input-container">
+                        <div class="ppw-ppf-headline"><p style="text-align: center"><img class="aligncenter size-full" src="https://www.top1.com.my/wp-content/uploads/top1-logo-white.png" alt="Top1 logo white" width="300"></p></div>
+                        <div class="ppw-ppf-desc"><p style="text-align: center">Please enter password below:</p></div>
+                     <p class="ppw-ppf-field-container">
+                            <label class="ppw-pwd-label" for="pwbox-10692"><input placeholder="Enter password" name="post_password" id="pwbox-10692" type="password" size="20" class="myPasswordInput" inputmode="numeric"></label> 						<input class="ppw-pwd-submit-btn" type="submit" name="Submit" value="Enter ">		</p></div>
+                <div class="ppw-ppf-desc-below"></div><div><input type="hidden" name="post_id" value="10692"></div>
+            </form>	
+    
+
+    </div>
+	</div>
+
+
+
+
+    <script>
+    /***************
+     * CREATE NUMBER PAD at the login page
+     * Need to change the pw-input id for every page
+     */
+  
+    var numberPad = `
+        <div class="numper-pad-container">
+  
+        <div class="num-row">
+            <div class="num-btn"><span>1</span></div>
+            <div class="num-btn"><span>2</span></div>
+            <div class="num-btn"><span>3</span></div>
+        </div>
+        <div class="num-row">
+            <div class="num-btn"><span>4</span></div>
+            <div class="num-btn"><span>5</span></div>
+            <div class="num-btn"><span>6</span></div>
+        </div>
+        <div class="num-row">
+            <div class="num-btn"><span>7</span></div>
+            <div class="num-btn"><span>8</span></div>
+            <div class="num-btn"><span>9</span></div>
+        </div>
+        <div class="num-row">
+        <div class="num-btn" id="erase-btn"><span>
+            <svg width="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                <path d="m18 9-6 6"></path>
+                <path d="m12 9 6 6"></path>
+              </svg>
+            </span>
+        </div>
+        <div class="num-btn"><span>0</span></div>
+        <div class="num-btn" id="enter-btn">
+            <span>
+            <svg width="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="m9 10-5 5 5 5"></path>
+                <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+              </svg>
+            </span>
+        </div>
+        </div>
+    </div>
+    `
+  
+    //turn css into js
+    var numberPadstyles = `
+  
+  .ppw-ppf-field-container{
+          display: flex;
+      justify-content: center;
+  }    
+  
+  .ppw-post-password-container{
+        padding: 50px 20px;
+      height: 100vh;
+      background-color: #000;
+  }
+  
+  .ppw-ppf-field-container .ppw-pwd-submit-btn{
+      background-color:#FF8B47;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: inset 0 0 0.5em 0 #ff8b47, 0 0 0.5em 0 #ff8b47;
+  }
+  
+  .ppw-ppf-desc p{
+      color:white;
+  }
+  
+  .ppw-ppf-headline{
+      text-align:center;
+  }
+  
+  
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #28221f;
+        height: 100vh;
+        width: 100vw;
+    }
+  
+    .numper-pad-container{
+        margin:auto;
+        margin-top:30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+  
+  
+    .myPasswordInput{
+        background-color: #000;
+        border: none;
+        height: 50px;
+        width: 100%;
+        color: white;
+        font-size: 16px;
+        box-shadow: inset 0 0 0.5em 0 #ff8b47, 0 0 0.5em 0 #ff8b47;
+        border: 2px solid #ff8b47;
+        border-radius: 5px;
+        padding-left:10px;
+        text-align: center;
+    }
+  
+    .myPasswordInput:focus{
+        border: 2px solid #ff8b47;
+        color: white !important;
+    }
+  
+    .num-row{
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+  
+    .num-btn{
+        width: 12vh;
+        height: 12vh;
+        text-align: center;
+        border: 1px solid #ff8b47;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+        color: #ff8b47;
+        font-weight: bold ;
+        font-size:16px;
+        box-shadow: inset 0 0 0.5em 0 #ff8b47, 0 0 0.5em 0 #ff8b47;
+    }
+  
+    .num-btn:hover{
+        background-color:#ff8b47;
+        color: #FFF !important;
+    }
+    `
+    
+    //insert html
+    var passwordContainer = document.querySelector('.ppw-post-password-container')
+    passwordContainer.innerHTML += numberPad
+  
+    //Insert CSS into HTML head
+    var styleSheet = document.createElement("style")
+    styleSheet.innerText = numberPadstyles
+    document.head.appendChild(styleSheet)
+  
+    // setting the password input
+    var myPasswordInput = document.querySelector('#pwbox-10692')
+    myPasswordInput.setAttribute("class","myPasswordInput");
+    myPasswordInput.setAttribute("inputmode", "numeric")
+  
+    var passwordBtn = document.querySelector(".ppw-pwd-submit-btn")
+    
+    //add function to numberpad buttons
+    var btn = document.querySelectorAll('.num-btn')
+    btn.forEach(val=>{
+        val.addEventListener("click",()=>{
+            myPasswordInput.value += val.innerText
+        })
+    })
+  
+    var eraseBtn = document.querySelector('#erase-btn')
+    eraseBtn.addEventListener("click",()=>{
+        myPasswordInput.value = myPasswordInput.value.slice(0, -1);
+    })
+  
+    var enterBtn = document.querySelector('#enter-btn')
+    enterBtn.addEventListener("click",()=>{
+        passwordBtn.click();
+    })
+  
+  
+    // Key Press
+    document.addEventListener("keypress", function(event) {
+  
+        var numberArray = ['1','2','3','4','5','6','7','8','9','0']
+  
+        // check if it is number only
+        
+        
+        
+        if(numberArray.includes(event.key)){
+            //and check whether the password-input is focused to prevent double insert
+            if(myPasswordInput != document.activeElement){
+                myPasswordInput.value+=event.key
+            }
+        }
+        
+    })
+  
+    //track the backspace key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Backspace") {
+            if(myPasswordInput != document.activeElement){
+                myPasswordInput.value = myPasswordInput.value.slice(0, -1);
+            }
+        }
+        if (event.keyCode === 13) {
+            passwordBtn.click();
+        }
+    });
+  
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+  
+  

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    
+<body>
+    <style>
+        .copy-button{
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<button id="vft-link" class="copy-button" value="vftlink.com" onclick="copyText(this.id,this.value)">Copy <i class='fa fa-clone'></i></button>
+<button id="vft-pdf" class="copy-button" value="vftpdf.com" onclick="copyText(this.id,this.value)">Copy <i class='fa fa-clone'></i></button>
+
+
+
+<!-- share button -->
+<p><button id="sharebtn1">Share Btn 1!</button></p>
+<p id="result1"></p>
+<p><button id="sharebtn2">Share Btn 2!</button></p>
+<p id="result2"></p>
+<!-- share button END-->
+
+
+<script>
+    function copyText(thisButtonId,text) {
+
+        // Set all copybutton text back to 'Copy'
+        const nodeList = document.querySelectorAll(".copy-button");
+            for (i = 0; i < nodeList.length; i++) {
+            nodeList[i].innerHTML = "Copy <i class='fa fa-copy'></i>"
+        } 
+
+    navigator.clipboard.writeText(text);
+    document.getElementById(thisButtonId).innerHTML = "Copied!"
+    }
+
+</script>
+
+</body>
+
+</html>
+
+

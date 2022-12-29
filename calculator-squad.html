@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Calculator V2</title>
+</head>
+<body>
+    <!-- Build a new squad x calculator from scratch -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        /* 
+        
+        primary: #FF8B4C
+        Background #FFF9F5
+        Primary Text #28221F
+        Tertiary Text #868079
+        */
+
+        h1,h2,h3,h4,h5,h6{
+            margin:0 !important;
+            padding:0 !important;
+        }
+
+
+        body{
+            font-family: Arial, Helvetica, sans-serif !important;
+            color: #28221F !important;
+            /* background-color: #FFF9F5; */
+        }
+
+        .calculator-container{
+            background-color: white !important;
+            overflow: hidden;
+            border: 1px solid #FF8B4C !important;
+            border-radius: 16px;
+            margin: auto;
+        }
+
+        .calculator-header{
+            /* background-color: #FF8B4C !important; */
+            background: linear-gradient(90deg, #22BBF0 0%, #2AA5FE 100%);
+            color: #FFFFFF !important;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .calculator-header h2, .calculator-header h4{
+            color: #FFFFFF !important;
+        }
+
+        .header-left-col{
+            width: 66%;
+            font-size: 24px;
+        }
+        
+        .header-left-col h2{
+            text-align: left;
+        }
+
+        .header-right-col{
+            width: 34%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: right;
+        }
+
+        .header-right-col h4{
+            margin: 0;
+            padding: 4px 8px;
+            font-size: 20px;
+            font-weight: normal;
+
+        }
+
+
+
+
+
+
+        .calculator-body{
+            min-height: 200px;
+            padding: 24px 64px;
+        }
+
+        .title-row{
+            padding: 0;
+            margin: 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 139, 76,30%);
+            font-size: 24px;
+        }
+
+        .title-row .col-title{
+            font-weight: bold;
+            color: #FF8B4C !important;
+            text-align: left;
+        }
+        
+        .myrow{
+            display: flex;  
+            align-items: center;
+            justify-content: center;
+        }
+
+        .myrow .mycol1{
+            width: 50%;
+        }
+
+        .myrow .mycol2{
+            width:25%;
+            text-align: left;
+            padding: 0px 4px;
+        }
+
+        .myrow div h6 {
+            /* text-align: center; */
+            /* font-size: 16px; */
+            margin: 0;
+        }
+
+        .product-row *{
+            padding: 0;
+            margin: 0;
+        }
+
+        .product-row{
+            margin-top: 24px;
+        }
+
+        .product-col{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title{
+            font-size: 20px;
+            text-align: left !important;
+        }
+
+        .product-col-details h5{
+            font-weight: normal;
+        }
+
+        .sales-col, .commission-col{
+            font-size: 20px;
+        }
+
+        .increment-group{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* justify-content: center; */
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .increment-group .quantity{
+            min-width: 48px;
+            text-align: center;
+            padding: 0 8px;
+            font-size: 20px;
+            /* font-weight: bold; */
+            border: none;
+            outline: none;
+            width: min-content;
+            max-width: 32px;
+        }
+
+        .increment-group button{
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(315deg, #FF8B4C 0%, rgba(255, 139, 76, 0.75) 100%);
+            box-shadow: 4px 4px 16px #F7ECE1;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            width: 100%;
+            height: 100%;
+            min-width: 24px;
+            min-height: 24px;
+            max-height: 36px;
+            max-width: 36px;
+            cursor: pointer;
+            aspect-ratio: 1 !important;
+            box-shadow: 0px 3px 20px rgba(255, 234, 224, 0.8);
+
+        }
+
+        .calculator-container{
+            position: relative;
+        }
+
+        .calculator-footer{
+            /* background: linear-gradient(90deg, #22BBF0 0%, #2AA5FE 100%); */
+            background-color: #FF8B4C !important;
+            border-radius: 8px;
+            color: white !important;
+            padding: 24px 16px;
+           
+        }
+
+        .calculator-footer h2, .calculator-footer h3{
+            color: white !important;           
+        }
+
+        .calculator-footer > *{
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        #total-sales{
+            font-size: 32px;
+        }
+
+        #total-commission{
+            font-size: 48px;
+        }
+
+
+
+        /* Mobile Stylling */
+        @media only screen and (max-width:400px){
+            .header-left-col h2{
+                font-size: 16px;
+            }
+
+            .header-right-col h4{
+                font-size: 14px;
+                font-weight: normal;
+            }
+
+            .title-row{
+                font-size: 14px;
+            }
+
+            .product-title{
+                font-size: 14px;
+            }
+
+            .increment-group .quantity{
+            min-width: 16px;
+            text-align: center;
+            padding: 0 4px;
+            font-size: 16px;
+            max-width: 24px;
+        }
+
+        .increment-group button{
+            font-size: 16px;
+            max-width: 28px;
+            max-height: 28px;
+        }
+
+        .sales-col, .commission-col {
+            font-size: 14px;
+        }
+
+        .calculator-body {
+            min-height: 200px;
+            padding: 16px;
+        }
+
+        .header-left-col {
+            width: 34%;
+            font-size: 24px;
+        }
+
+        .header-right-col {
+            width: 66%;
+        }
+
+        #total-sales{
+            font-size: 16px;
+        }
+        
+        #total-commission{
+            
+            font-size: 24px;
+        }
+
+        .increment-group{
+            margin-top: 4px;
+        }
+
+        .product-row{
+            margin-top: 16px;
+        }
+
+        .product-col-details h5{
+            font-size: 12px;
+        }
+
+        }
+
+
+
+    </style>
+
+    <div class="calculator-container">
+
+        <div class="calculator-header">
+            <div class="header-left-col">
+                <h2>Squad Commission Calculator</h2>
+            </div>
+            <div class="header-right-col">
+                <h4>Total Sales: <strong>RM</strong> <strong id="header-sales">0</strong> </h4>
+                <h4>Total Commission: <strong>RM</strong> <strong id="header-commission">0</strong> </h4>
+            </div>
+        </div>
+
+        <div class="calculator-body">
+            <div class="title-row myrow">
+                <div class="mycol1"><h6 class="col-title">Products</h6></div>
+                <div class="mycol2"><h6 class="col-title">Squad Only</h6></div>
+                <div class="mycol2"><h6 class="col-title">Partner X Squad</h6></div>
+            </div>
+
+        </div>
+
+        <div class="calculator-footer">
+            <h3>Total Sales: RM <span id="total-sales">0</span></h3>
+            <h2>Total Commission: RM <span id="total-commission">0</span></h2>
+        </div>
+
+    </div>
+
+    <div class="cost-container">
+
+    </div>
+
+
+
+    <script>
+
+        var products = [
+            {
+                id:'vft',
+                name: "分钱为王",
+                price: 3880,
+                squadCommission: 1940,
+                partnerCommission: 679,
+
+            },
+            {
+                id:"vft-cap",
+                name: "分钱为王 Corporate Annual Plan",
+                price: 31040,
+                squadCommission: 9312,
+                partnerCommission: 3104,
+            },
+            {
+                id:"vmg-standard",
+                name: "Vimigo Standard",
+                price: 21600,
+                squadCommission: 2000,
+                partnerCommission: 2000,
+            },
+            {
+                id:"vmg-medium",
+                name: "Vimigo Medium",
+                price: 31968,
+                squadCommission: 3000,
+                partnerCommission: 3000,
+            },
+            {
+                id:"vmg-max",
+                name: "Vimigo Max",
+                price: 50304,
+                squadCommission: 5000,
+                partnerCommission: 5000,
+            },
+            {
+                id:"vmg",
+                name: "Vimigo Ala Carte",
+                price: 11760,
+                squadCommission: 1176,
+                partnerCommission: 1176,
+            },
+            {
+                id:"vmg-addon",
+                name: "Vimigo Ala Carte Add-On",
+                price: 4880,
+                squadCommission: 610,
+                partnerCommission: 610,
+            },
+            {
+                id:"topc",
+                name: "TOP1% Club",
+                price: 10000,
+                squadCommission: 1000,
+                partnerCommission: 500,
+            },
+            {
+                id:"founder",
+                name: "Founder",
+                price: 168000,
+                squadCommission: 10000,
+                partnerCommission: 10000,
+            },
+            {
+                id:"partnership",
+                name: "Partnership",
+                price: 256000,
+                squadCommission: 20000,
+                partnerCommission: 20000,
+            },
+            {
+                id:"top100",
+                name: "TOP100 Legends",
+                price: 25000,
+                squadCommission: 1000,
+                partnerCommission: 1000,
+            }
+        ]
+
+        $( document ).ready(function() {
+            buildProductRow()
+            calculate()
+        })
+
+        function calculate(){
+            //update sales & commission of each product row
+            
+            var totalSales =  0
+            var totalCommission = 0
+
+            
+            for(product of products){
+                
+                var squadQuantity = Number($(`#${product.id}-squad-quantity`).val())
+                var partnerQuantity = Number($(`#${product.id}-partner-quantity`).val())
+                
+                var sales = (squadQuantity + partnerQuantity) * product.price
+                var squadCommission = squadQuantity * product.squadCommission
+                var partnerCommission = partnerQuantity * product.partnerCommission
+                var sumCommission = squadCommission + partnerCommission
+
+                totalSales += sales
+                totalCommission += sumCommission
+
+                $(`#${product.id}-sales`).text(sales.toLocaleString(undefined, {minimumFractionDigits: 2}))
+                $(`#${product.id}-commission`).text(sumCommission.toLocaleString(undefined, {minimumFractionDigits: 2}))
+
+            }
+            
+            $("#header-sales").text(totalSales.toLocaleString(undefined, {minimumFractionDigits: 2}))
+            $("#total-sales").text(totalSales.toLocaleString(undefined, {minimumFractionDigits: 2}))
+            $("#header-commission").text(totalCommission.toLocaleString(undefined, {minimumFractionDigits: 2}))
+            $("#total-commission").text(totalCommission.toLocaleString(undefined, {minimumFractionDigits: 2}))
+
+        }
+        
+        function buildProductRow(){
+
+            for(product of products){
+
+                var productRow
+
+                if(product.id == "top100"){
+                    productRow = `
+                    <div class="product-row myrow">
+                        <div class="product-col mycol1">
+                            <div class="product-col-details">
+                                <h4 class="product-title">${product.name}</h4>
+                                
+                                <h5>
+                                    Sales: &nbsp; &nbsp; RM <span id="${product.id}-sales">0</span>
+                                </h5>
+                                <h5>
+                                    Comm: &nbsp; RM <span id="${product.id}-commission"> 0</span>
+                                </h5>
+
+                            </div>
+                        </div>
+                        
+                        <div class="sales-col mycol2">
+                            <div class="increment-group">
+                                <button class="minus-btn" onclick="minus('${product.id}-squad')">-</button>
+                                <input readonly type="text" name="" id="${product.id}-squad-quantity" value="0" class="quantity">
+                                <button class="minus-btn" onclick="plus('${product.id}-squad')">+</button>
+            
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="commission-col mycol2" style="visibility: hidden;">
+                            <div class="increment-group">
+                                <button class="minus-btn" onclick="minus('${product.id}-partner')">-</button>
+                                <input readonly type="text" name="" id="${product.id}-partner-quantity" value="0" class="quantity">
+                                <button class="minus-btn" onclick="plus('${product.id}-partner')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                
+                }else
+                {
+
+                
+                productRow = `
+                    <div class="product-row myrow">
+                        <div class="product-col mycol1">
+                            <div class="product-col-details">
+                                <h4 class="product-title">${product.name}</h4>
+                                
+                                <h5>
+                                    Sales: &nbsp; &nbsp; RM <span id="${product.id}-sales">0</span>
+                                </h5>
+                                <h5>
+                                    Comm: &nbsp; RM <span id="${product.id}-commission"> 0</span>
+                                </h5>
+
+                            </div>
+                        </div>
+                        
+                        <div class="sales-col mycol2">
+                            <div class="increment-group">
+                                <button class="minus-btn" onclick="minus('${product.id}-squad')">-</button>
+                                <input readonly type="text" name="" id="${product.id}-squad-quantity" value="0" class="quantity">
+                                <button class="minus-btn" onclick="plus('${product.id}-squad')">+</button>
+            
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="commission-col mycol2">
+                            <div class="increment-group">
+                                <button class="minus-btn" onclick="minus('${product.id}-partner')">-</button>
+                                <input readonly type="text" name="" id="${product.id}-partner-quantity" value="0" class="quantity">
+                                <button class="minus-btn" onclick="plus('${product.id}-partner')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                
+                }
+
+                $(".calculator-body").append(productRow)
+            }
+
+        }
+
+
+        /*To Build Product Row*/
+
+        function plus(quantityName){
+            var inputField;
+            inputField = quantityName+'-quantity'
+
+            var quantity = document.getElementById(inputField).value++
+
+            calculate()
+        }
+
+        function minus(quantityName){
+            var inputField;
+            inputField = quantityName + '-quantity'
+            quantity = document.getElementById(inputField).value
+            if (quantity>0){
+                document.getElementById(inputField).value--
+            }
+
+            calculate()
+        }
+
+        
+        // keep track when changed value
+        $(":input").bind('keyup mouseup', function () {
+            calculate()
+        });
+
+
+
+
+    </script>
+
+
+    
+</body>
+</html>

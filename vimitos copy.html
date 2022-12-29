@@ -16,6 +16,13 @@
     <!-- JQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <!-- table to excel cdn -->
+    <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+
     <style>
 
     *, html, body{
@@ -63,10 +70,11 @@
       justify-content: center;
     }
 
-    .search_icon{
+    /*search icon*/
+    .search_container .search_icon{
       
-      font-size: 32px;
-      /* font-weight: bold; */
+      font-size: 24px;
+      font-weight: normal;
       color: #ff8b47;
       padding: 0px 8px;
       aspect-ratio: 1;
@@ -165,13 +173,13 @@
       font-size: 12px;
     }
 
-    .mybadge.bg-primary{
+    .mybadge.bg-blue{
       background-color: #007BFF;
     }
-    .mybadge.bg-danger{
+    .mybadge.bg-red{
       background-color: #ef1c1c;
     }
-    .mybadge.bg-success{
+    .mybadge.bg-green{
       background-color: #64DD17;
     }
 
@@ -368,10 +376,6 @@ Modal END
 
     </style>
 
-
-
-  
-
   <script>
     $(document).ready(function(){
       $("#my_search_input").on("keyup", function() {
@@ -399,25 +403,6 @@ Modal END
       })
     })
 
-// function searchFunction(){
-//   var value = $("#my_search_input").val().toLowerCase()
-//   value = value.trim()
-//   console.log(value)
-
-//   if (value == "" ){
-//     $("#mytable").removeClass("hideModal")
-//     $("#mytable").addClass("showModal")
-//   }else{
-
-//     $("#mytable").removeClass("hideModal")
-//     $("#mytable").addClass("showModal")
-
-//     $("#mybody tr").filter(function() {
-//       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-//     });
-//   }
-
-// }
 
  </script>
 
@@ -425,57 +410,148 @@ Modal END
   <a class="back_button" href="https://top1.com.my/sales"><span> &#8249 </span> Back to sales portal</a>
   <h1 class="header_title">vimiTOS</h1>
 
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Search For Company</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Show Open Deal</button>
+    </li>
+    
+  </ul>
+
 </div>
-  <div class="search_container">
-    <span class="search_icon">⌕</span>
-    <input type="text" id="my_search_input" class="mysearchbar" placeholder="search for company name...">
-  </div>
 
-<!-- ------------------------------------------------------------------------------------ -->
-  <div class="prompt_search_container">
-    <h2>Search company to check their eligibility date</h2>
-  </div>
 
-  <div class="label_container hide">
-    <div class="label">
-      <div class="label_badge_div">
-        <span class="mybadge bg-primary">Contact Admin</span>
-      </div>
-
-      <div>Information incomplete. Contact Admin to know more.</div>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="search_container">
+      <span class="search_icon">⌕
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="search_icon bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg> -->
+  
+      </span>
+      <input type="text" id="my_search_input" class="mysearchbar" placeholder="search for company name...">
     </div>
-    <div class="label">
-      <div class="label_badge_div"> 
-
-        <span class="mybadge bg-danger">Protected</span>
-      </div>
-      <div>Still in Protection Period. Only Owner can close them.</div>
+  
+  <!-- ------------------------------------------------------------------------------------ -->
+    <div class="prompt_search_container">
+      <h2>Enter company name to check Protection Status</h2>
     </div>
-    <div class="label">
-      <div class="label_badge_div">  
-        <span class="mybadge bg-success">Open Deal</span>
+  
+    <div class="label_container hide">
+      <div class="label">
+        <div class="label_badge_div">
+          <span class="mybadge bg-blue">Contact Admin</span>
+        </div>
+        <div>Information incomplete. Contact Admin or Deal Owner to know more.</div>
       </div>
-      <div>Passed Expired Date. Everyone can contact them.</div>
+      <div class="label">
+        <div class="label_badge_div"> 
+  
+          <span class="mybadge bg-red">Protected</span>
+        </div>
+        <div>Still within Protection Period.</div>
+      </div>
+      <div class="label">
+        <div class="label_badge_div">  
+          <span class="mybadge bg-green">Open Deal</span>
+        </div>
+        <div>Protection Period Expired. Anyone can contact.</div>
+      </div>
+    </div>
+  
+    <div class="my_table_container">
+  
+      <table id="mytable" BORDER=0 CELLSPACING=0 class="vimitos_table hide">
+        <thead id="myhead">
+          <tr>
+            <th>Company</th>
+            <th>Company Owner</th>
+            <th>Status</th>
+            <th>Latest Deal Owner</th>
+            <th>Expiry Date</th>
+          </tr>
+        </thead>
+        <tbody id="mybody">
+  
+        </tbody>
+  
+      </table>
     </div>
   </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    
+  
+  <!-- ------------------------------------------------------------------------------------ -->
+    <div class="prompt_search_container">
+      <h2>Enter company name to check Protection Status</h2>
+    </div>
+  
+  
+    <div class="my_table_container">
 
-  <div class="my_table_container">
+      <button class="btn btn-primary ms-4" onclick="exportTableToExcel('alldeals-table', 'Open&purchasedPreview')">Export Table Data To Excel File</button>
 
-    <table id="mytable" BORDER=0 CELLSPACING=0 class="vimitos_table hide">
-      <thead id="myhead">
-        <tr>
-          <th>Company</th>
-          <th>Status</th>
-          <th>Owner</th>
-          <th>Expiry Date</th>
-        </tr>
-      </thead>
-      <tbody id="mybody">
+      <script>
 
-      </tbody>
+            function exportTableToExcel(tableID, filename = ''){
+                var downloadLink;
+                var dataType = 'application/vnd.ms-excel';
+                var tableSelect = document.getElementById(tableID);
+                var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+                
+                // Specify file name
+                filename = filename?filename+'.xls':'excel_data.xls';
+                
+                // Create download link element
+                downloadLink = document.createElement("a");
+                
+                document.body.appendChild(downloadLink);
+                
+                if(navigator.msSaveOrOpenBlob){
+                    var blob = new Blob(['\ufeff', tableHTML], {
+                        type: dataType
+                    });
+                    navigator.msSaveOrOpenBlob( blob, filename);
+                }else{
+                    // Create a link to the file
+                    downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+                
+                    // Setting the file name
+                    downloadLink.download = filename;
+                    
+                    //triggering the function
+                    downloadLink.click();
+                }
+            }
 
-    </table>
-  </div> 
+      </script>
+
+  
+      <table id="alldeals-table" BORDER=0 CELLSPACING=0 class="vimitos_table">
+        <thead id="alldeals-head">
+          <tr>
+            <th>Company</th>
+            <th>Company Owner</th>
+            <th>Status</th>
+            <th>Latest Deal Owner</th>
+            <th>Expiry Date</th>
+            <th>Purchased Preview</th>
+          </tr>
+        </thead>
+        <tbody id="alldeals-body">
+  
+        </tbody>
+  
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  
 
 
     <!-- Modal Start -->
@@ -504,7 +580,7 @@ Modal END
     const ssid = `1qKX3OSh8_B3b7aYm4-raqkiMCGq85bPjHJRp0cSKRvA`
     const q1 = `/gviz/tq?`
     const q2 = 'tqx=out:json'
-    const sheetName = `Deal` //this is the GSheet Tab Name
+    const sheetName = `Deal_With_Associated_Contacts` //this is the GSheet Tab Name
     const q3 = `sheet=${sheetName}`
     const finalURL = `${baseURL}${ssid}${q1}&${q2}&${q3}` //final google sheet link to fetch
     //***********
@@ -537,22 +613,28 @@ Modal END
         var recordID = getCellValue(rowData[0])
         var dealName = getCellValue(rowData[1])
         var companyName = getCellValue(rowData[2])
-        var product = getCellValue(rowData[3])
-        var ownerID = getCellValue(rowData[4])
-        var ownerName = getCellValue(rowData[5])
-        var ownerTeam = getCellValue(rowData[6])
-        var closedDate = convertToDate(getCellValue(rowData[7]))
-        var dealStage = getCellValue(rowData[8])
+        
+        var contactName = getCellValue(rowData[3])
+
+        var product = getCellValue(rowData[4])
+        var ownerID = getCellValue(rowData[5])
+        var ownerName = getCellValue(rowData[6])
+        var ownerTeam = getCellValue(rowData[7])
+        var closedDate = convertToDate(getCellValue(rowData[8]))
+        var dealStage = getCellValue(rowData[9])
 
         var status = "" // need to calculate from latest deals
-        var companyOwner =  "" //need to calculate from latest deals // ## find a better way
+        var latestDealOwner =  "" //need to calculate from latest deals // ## find a better way
 
         var companyObject = {
           companyName : companyName,
-          companyOwner: "", //to be calculated
+          contactName: contactName,
+          latestDealOwner: "", //to be calculated
           expired : "", //to be calculated
           status:"", //to be calculated
-          deals:[]
+          deals:[],
+          purchasedSoftware: "NO",   //temp
+          purchasedPreview: "NO"   
         }
 
         var dealObject = {
@@ -568,10 +650,12 @@ Modal END
       }) // end of foreach loop
 
 
-      console.log(companies); //final nested companies list
+      // console.log(companies); 
+      //final nested companies list
       
 
       buildTable()
+      buildAllDealsTable()
       
     }
 
@@ -618,15 +702,14 @@ Modal END
         //set the expiry date for newly create date
         companyObject.expired = expiredDate
         //set owner
-        companyObject.companyOwner = dealObject.ownerName
+        companyObject.latestDealOwner = dealObject.ownerName
         //set status
-        companyObject.status = getStatus(expiredDate, companyObject.companyOwner)
+        companyObject.status = getStatus(expiredDate, companyObject.latestDealOwner, dealObject.product)
 
         companyObject.deals.push(dealObject)
-        companies.push(companyObject)
-
-
-
+        if(companyObject.companyName!=""){
+          companies.push(companyObject)
+        }
       }
       else if (result.length === 1) {
         // property found, access the foo property using result[0].foo
@@ -641,26 +724,25 @@ Modal END
         //current expired from the company array
         var existingExpired = (result[0].expired) //有可能是''
 
-        if(result[0].companyOwner == "" && (existingExpired =="" || existingExpired=="Invalid Date")){
+        if(result[0].latestDealOwner == "" && (existingExpired =="" || existingExpired=="Invalid Date")){
           // 当目前的owner和expired都是空的    就直接replace
 
           result[0].expired = expiredDate
-          result[0].companyOwner = dealObject.ownerName
-          result[0].status = getStatus(expiredDate, dealObject.ownerName)
+          result[0].latestDealOwner = dealObject.ownerName
+          result[0].status = getStatus(expiredDate, dealObject.ownerName, dealObject.product)
 
         }else{
 
           if(expiredDate=="" || expiredDate =="Invalid Date"){
             //if expired date is null, do nothing
 
-
           // }else if( (moment(expiredDate).isAfter(existingExpired)) ){
-          }else if( (new Date(expiredDate) > new Date(existingExpired)) ){
+          }else if( (new Date(expiredDate) > new Date(existingExpired)) || new Date(existingExpired)===""){
             //REPLACE
 
             result[0].expired = expiredDate
-            result[0].companyOwner = dealObject.ownerName
-            result[0].status = getStatus(expiredDate, dealObject.ownerName)
+            result[0].latestDealOwner = dealObject.ownerName
+            result[0].status = getStatus(expiredDate, dealObject.ownerName, dealObject.product)
             
           }
 
@@ -696,8 +778,9 @@ Modal END
         `
         <tr onclick='getDeals("${companyName}")'>
           <td>${company.companyName}</td>
+          <td>${company.contactName}</td>
           <td>${getBadge(company.status)}</td>
-          <td>${company.companyOwner}</td>
+          <td>${company.latestDealOwner}</td>
           <td>${company.expired}</td>
 
         </tr>
@@ -709,6 +792,51 @@ Modal END
       // buildDataTable()
       // console.log("finish building table: " + new Date().toTimeString());
     }
+
+
+    function buildAllDealsTable(){
+      // var index = 0
+      for(company of companies){
+
+       
+        var companyName = escape(company.companyName)
+        
+        
+
+
+        var deals = company.deals
+          for(deal of deals){
+
+            if(deal.product == "Vimigo Preview"){
+
+              console.log(deal.product)
+              company.purchasedPreview = "YES"
+            }
+          }
+
+      var row = 
+        
+       `
+        <tr onclick='getDeals("${companyName}")'>
+          <td>${company.companyName}</td>
+          <td>${company.contactName}</td>
+          <td>${getBadge(company.status)}</td>
+          <td>${company.latestDealOwner}</td>
+          <td>${company.expired}</td>
+          <td>${company.purchasedPreview}</td>
+        </tr>
+        `
+        
+        // $('#alldeals-body').append(row)
+        if(company.status === "Open Deal" && company.purchasedPreview=="YES"){
+          $('#alldeals-body').append(row)
+        }
+
+
+          
+      }
+    }
+
 
     // convert the date from google sheet into JS date
     //Hubspot Date Format: 29/05/2022
@@ -726,12 +854,12 @@ Modal END
     function getBadge(status) {
         switch(status){
             case "Protected":
-              return `<span class="mybadge bg-danger">${status}</span>`
+              return `<span class="mybadge bg-red">${status}</span>`
             case "Open Deal":
-                return `<span class="mybadge bg-success">${status}</span>`
+                return `<span class="mybadge bg-green">${status}</span>`
 
             default:
-                return `<span class="mybadge bg-primary">${status}</span>`
+                return `<span class="mybadge bg-blue">${status}</span>`
         }
     }
 
@@ -760,7 +888,7 @@ Modal END
     }
 
     //function check status
-    function getStatus(expiredDate, ownerName){
+    function getStatus(expiredDate, ownerName, product=""){
       // var today = moment().format('DD MMM, YYYY')
       var today = new Date()
       var expiry = new Date(expiredDate)
@@ -768,15 +896,17 @@ Modal END
 
       // if either one of owner name or expire date is empty, make it CONTACT ADMIN
       if(ownerName === "" || expiredDate === ""){
-        return "Contact Admin"
+        if(product==="Vimigo Preview"){
+          return "Open Deal"
+        }else{
+          return "Contact Admin"
+        }
       }
-
       else if(((expiry) < (today))){
         return "Open Deal"
       }else{
         return "Protected"
       }
-
 
     }
 
@@ -813,7 +943,7 @@ Modal END
     function getDeals(companyName){
       companyName = unescape(companyName)
 
-      console.log("passed parameter: "+ companyName)
+      // console.log("passed parameter: "+ companyName)
 
       $('.my_modal_content').empty()
 
@@ -829,7 +959,8 @@ Modal END
           var companyDetails = 
           `
           <h2 class="modal_title">${company.companyName}</h2>
-          <div class="my_flex"> Company Owner: &nbsp; <strong>${company.companyOwner}</strong></div>
+          <div class="my_flex"> Company Owner: &nbsp; <strong>${company.contactName}</strong></div>
+          <div class="my_flex"> Latest Deal Owner: &nbsp; <strong>${company.latestDealOwner}</strong></div>
           <div class="my_flex"> Expired Date : &nbsp;<strong>${company.expired}</strong></div>
           <div class="my_flex"> Protection Status:&nbsp;${getBadge(company.status)} </div>
        
@@ -889,54 +1020,13 @@ Modal END
       }
     });
 
-
-
-
-
-
-    //Initialise Datatable
-    // var datatable
-
-    // function buildDataTable() {
-
-    //     $.fn.dataTable.moment('DD MMM, YYYY');//sortbydate using moment js
-
-    //     datatable = $("#mytable").DataTable({
-    //       scrollX: "100%",
-          
-    //       scrollCollapse: true,
-    //       language: {
-    //         paginate: {
-    //           previous: `<p class=".paginate_button .previous"> &#x2039; </p>`,
-    //           next: `<span class=".paginate_button .next"> &#x203A; </span>`
-    //           // previous:'<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
-    //         },
-    //       },
-    //     });
-    // }
-
-
-
-    // make left right key to go next page datatable
-    // $(document).keyup((evt) => {
-    //   if (evt.key === 'ArrowLeft')
-    //     $('#mytable_previous').click()
-    //   if (evt.key === 'ArrowRight')
-    //     $('#mytable_next').click()
-    // });
-
-
   </script>
 
 
-<!-- Datatable JS -->
-<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-<!-- moment JS CDN -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script> -->
 
-  <!-- sort date datatable moment JS CDN -->
-  <!-- <script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script> -->
 
 </body>
 </html>

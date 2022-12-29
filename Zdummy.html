@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+
+  <script>
+
+
+var deals = [
+      {
+        name: "Deal 1",
+        closedDate: "07 Jul, 2022",
+      },
+      {
+        name: "Deal 2",
+        closedDate: "21 Jul, 2022",
+      },
+      // {
+      //   name: "Deal 3",
+      //   date: "17 Jul, 2022",
+      // },
+      // {
+      //   name: "Deal 4",
+      //   date: "30 Sep, 2021",
+      // },
+      // {
+      //   name: "Deal 5",
+      //   date: "31 Jan, 2022",
+      // },
+    ]
+
+    var dealObject =[
+    {
+        "dealName": "Wei Ling Motor Sdn Bhd - 12/3/2022",
+        "product": "Vimigo Preview",
+        "ownerName": "",
+        "ownerTeam": "",
+        "closedDate": "12 Mar, 2022",
+        "dealStage": "qualifiedtobuy"
+    },
+    {
+        "dealName": "Wei Ling Motor Sdn Bhd",
+        "product": "Vimigo Preview",
+        "ownerName": "Jason Ting Jia Sheng",
+        "ownerTeam": "",
+        "closedDate": "15 Sep, 2022",
+        "dealStage": "qualifiedtobuy"
+    },
+    {
+        "dealName": "WEI LING MOTOR SDN BHD",
+        "product": "Vimigo Preview",
+        "ownerName": "Loh Su Cheng",
+        "ownerTeam": "",
+        "closedDate": "",
+        "dealStage": "qualifiedtobuy"
+    },
+    {
+        "dealName": "Manychat - Preview",
+        "product": "Vimigo Preview",
+        "ownerName": "",
+        "ownerTeam": "",
+        "closedDate": "",
+        "dealStage": "presentationscheduled"
+    }
+]
+
+
+console.log(dealObject)
+
+var sorted = dealObject
+var sorted = myBubbleSort(sorted)
+
+console.log(sorted)
+
+
+function myBubbleSort(arr){
+  
+    for(var i = 0; i < arr.length; i++){
+       
+      // Last i elements are already in place 
+      for(var j = 0; j < ( arr.length - i - 1 ); j++){
+         
+        // Checking if the item at present iteration
+        // is greater than the next iteration
+        if( arr[j].closedDate == "" || moment(arr[j].closedDate).isBefore(arr[j+1].closedDate)
+          // arr[j] < arr[j+1] 
+          ){
+           
+          // If the condition is true then swap them
+          var temp = arr[j]
+          arr[j] = arr[j + 1]
+          arr[j+1] = temp
+        }
+      }
+    }
+    return arr
+  }
+
+  </script>
+  
+</body>
+</html>
